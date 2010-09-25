@@ -1,0 +1,78 @@
+body { 
+	font-family: lucida grande, geneva, helvetica, verdana, sans-serif;
+	font-size: medium; 
+	color: #444444; 
+	overflow-x:hidden; 
+	overflow-y: scroll}
+
+#wrap { width: 560px; margin: 16px auto; }
+#logo { max-width: 560px }
+#main_form { position: relative; width: 560px; min-height: 200px; }
+
+#main_input { 	
+	position: relative;
+	left: 80px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	width: 400px;               /* 560px (main_form) - 80 (left_margin) - 80 (right_margin) */ 
+	height: 30px; 
+	font-size: x-large; }
+#left_menu_col {
+	float: left;
+	padding-right: 20px;
+	width: 260px;
+	}
+#right_menu_col {
+	float: left;
+	padding-left: 20px;
+	width: 260px;
+	}
+.left_button {
+	float: right;
+}
+.right_button {
+	float: left;
+}
+
+/* button styles adapted from http://www.zurb.com/playground/google-buttons? */
+button.g-button, a.g-button, input[type=submit].g-button {
+	padding: 12px 20px;
+	-webkit-border-radius: 3px 3px;
+	border: solid 1px rgb(153, 153, 153);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(255, 255, 255)), to(rgb(221, 221, 221)));
+	color: #333;
+	text-decoration: none;
+	cursor: pointer;
+	display: inline-block;
+	text-align: center;
+	text-shadow: 0px 1px 1px rgba(255,255,255,1);
+	font-size: large;
+	line-height: 1; }
+	
+#instructions {
+	position: relative;
+	min-height: 200px}
+
+#left_instructions_col {
+	border-right-style: dotted;
+	border-width:1px;
+	float: left;
+	padding-left: 20px;
+	width: 260px; }
+	
+#right_instructions_col {
+	float: left;
+	padding-left: 20px;
+	width: 255px; }	
+	
+#bottom_menu {
+	margin-top: 20px;
+	position: relative; 
+	text-align: center;}
+
+#footer {
+	margin-top: 20px;
+	font-size: x-small;
+	position: relative; 
+	text-align: center;}
+
