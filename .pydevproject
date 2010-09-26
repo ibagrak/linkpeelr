@@ -11,5 +11,6 @@
 <pydev_pathproperty name="org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH">
 <path>C:\Program Files\Google\google_appengine\lib</path>
 <path>C:\Program Files\Google\google_appengine</path>
+<path>C:\Program Files\Google\google_appengine\lib\django</path>
 </pydev_pathproperty>
 </pydev_project>
