@@ -5,49 +5,51 @@
 <title>Know Where Link Is Going Before You Click</title>
 <link href="/static/css/site.css" rel="stylesheet" type="text/css"/>
 
-<!-- standard external libraries:
-	<script src="/static/jquery-1.4.2.js" type="text/javascript"></script>
--->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="/static/linkpeelr.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18747503-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </head>
 
 <body>
 <div id="wrap">
 	<img id="logo" src="/static/redonion.png" />
-	<form id="main_form" action="#">
+	<div id="intro_block">
+		<p/>Ever wonder where a link like <a href="http://bit.ly/9Uk1wi">http://bit.ly/9Uk1wi</a> will take you? Just copy the link into the field
+		below and <span class="button_ref_text">Peel</span> it to find out. 
+		<p/>Got what you expected? Just click <span class="button_ref_text">Follow</span> to follow the link or <span class="button_ref_text">Peel</span> again.
+	</div>
+	<form id="main_form" action="">
 		<input id="main_input" type="text" name="url_input" />
 		<div id="left_menu_col">
-			<button type="submit" class="g-button left_button">Peel</button>
+			<button id="peel_button" class="g-button opink left_button">Peel</button>
 		</div>
 		<div id="right_menu_col">
-			<button type="submit" class="g-button right_button">Follow</button>
+			<button id="follow_button" class="g-button ogreen right_button">Follow</button>
 		</div>
 	</form>
-	<div id="instructions">
-		<div id="left_instructions_col">
-			<h2>How It Works:</h2>
-			<ol>
-				<li>Paste link above</li>
-				<li>Click &quot;Peel&quot; if you want to see where link will take you</li>
-				<li>Click &quot;Follow&quot; if you want to follow the link</li>
-				<li>Go to step 2
-			</ol>
-		</div>
-		<div id="right_instructions_col">
-			<h2>Extra Goodies:</h2>
-			<ul>
-				<li>Download Chrome extension</li>
-				<li>Download Firefox plugin</li>
-				<li>Like us on Facebook</li>
-			</ul>
-		</div>
+    <div id="download_block">
+		<p/><span class="button_ref_text">Peel</span> any link anywhere on the Web!
+		<p/><img class="bullet" src="http://www.google.com/intl/en/images/icons/about_chrome.gif"/>Chrome extension is <em>coming soon</em>
 	</div>
 	<div id="bottom_menu">
-		Twitter 
+		<a href="http://twitter.com/ibagrak">Twitter</a> 
 		| 
-		Blog 
+		<a href="http://codercofounder.wordpress.com">Blog</a> 
 		| 
-		About
+		<a href="http://github.com/ibagrak/linkpeelr">GitHub</a>
 	</div>
-	<div id="footer"> &copy; 2010 Ilya Bagrak</div>
+	<div id="footer"> &copy; 2010 Ilya Bagrak. All Rights Reserved.</div>
 </div>
 </body>
