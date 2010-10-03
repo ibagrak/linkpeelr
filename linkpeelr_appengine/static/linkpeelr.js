@@ -28,7 +28,7 @@ $(document).ready(function() {
 			/* got a redirect -> set field value to new URL */
 			if (error_code == 301 || error_code == 302) {
 				$("#main_input").val(result[1]); 
-			/* got either a direct link (could be 404, doesn't matter) 
+			/* got a direct link (e.g. 200) or error code (e.g. 404) doesn't matter) 
 			 * -> disable "Peel" button
 			 * */
 			} else {
@@ -53,4 +53,6 @@ $(document).ready(function() {
 	$("#main_input").keyup(function() {
 		$("#peel_button").removeAttr("disabled");
 	});
+	
+	
 });

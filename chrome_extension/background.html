@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--
+ * Copyright (c) 2010 The Chromium Authors. All rights reserved.  Use of this
+ * source code is governed by a BSD-style license that can be found in the
+ * LICENSE file.
+-->
+<html>
+<head>
+</head>
+<body>
+<script>
+	function peel(request, callback) {
+		var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(data) {
+        	if (xhr.readyState == 4) {
+            	if (xhr.status == 200) {
+              		var data = JSON.parse(xhr.responseText);
+              		var error_code = data[0];
+  					var ellipses = "";
+  					
+		  			/* got a redirect -> set field value to new URL */
+  					if (error_code == 301 || error_code == 302) {
+
+  	  					if (data[1].length > 50) {
+  	  	  					ellipses = "...";
+  	  					}		
+  						callback("<a href='" + data[1] + "'>" + data[1].substr(0,50) + ellipses + "</a>");
+  					/* got a direct link (e.g. 200) or error code (e.g. 404) doesn't matter) 
+  			 		 * -> disable "Peel" button
+  			 		 **/
+  					} else {
+  						if (request.url.length > 50) {
+  	  	  					ellipses = "...";
+  	  					}
+  						/* make link in tooltip clickable */
+  						callback("<a href='" + request.url + "'>" + request.url.substr(0,50) + ellipses + "</a>");
+  					}
+            	} else {
+                	callback("Oops! Something is wrong..");
+            	}
+          	}
+        }
+     	// Note that any URL fetched here must be matched by a permission in
+        // the manifest.json file!
+        var url = 'http://linkpeelr.appspot.com/api?action=' + request.action + '&url=' + request.url;
+        xhr.open('GET', url, true);
+        xhr.send();
+
+      };
+
+      /**
+       * Handles data sent via chrome.extension.sendRequest().
+       * @param request Object Data sent in the request.
+       * @param sender Object Origin of the request.
+       * @param callback Function The method to call when the request completes.
+       */
+      function onRequest(request, sender, callback) {
+        if (request.action == 'peel') {
+          peel(request, callback);
+        }
+      };
+
+      // Wire up the listener.
+      chrome.extension.onRequest.addListener(onRequest);
+</script>
+</body>
+</html>
