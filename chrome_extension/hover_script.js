@@ -2,9 +2,37 @@
  * Created on Sep 28, 2010
  *
  *   @author: ibagrak
+ *   
+ *   Used parts of TipTip tooltip code (license below)
+ *   Used parseUri script (license below)
  */
 
-var imgURL = chrome.extension.getURL("ajax-loadergif");
+/*
+ * TipTip
+ * Copyright 2010 Drew Wilson
+ * www.drewwilson.com
+ * code.drewwilson.com/entry/tiptip-jquery-plugin
+ *
+ * Version 1.3   -   Updated: Mar. 23, 2010
+ *
+ * This Plug-In will create a custom tooltip to replace the default
+ * browser tooltip. It is extremely lightweight and very smart in
+ * that it detects the edges of the browser window and will make sure
+ * the tooltip stays within the current window size. As a result the
+ * tooltip will adjust itself to be displayed above, below, to the left 
+ * or to the right depending on what is necessary to stay within the
+ * browser window. It is completely customizable as well via CSS.
+ *
+ * This TipTip jQuery plug-in is dual licensed under the MIT and GPL licenses:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *   http://www.gnu.org/licenses/gpl.html
+ */
+
+//parseUri 1.2.2
+//(c) Steven Levithan <stevenlevithan.com>
+//MIT License
+
+var imgURL = chrome.extension.getURL("ajax-loader.gif");
 var animation = "<img src='" + imgURL + "'/>";
 var defaults = { 
 		activation: "hover",
@@ -24,23 +52,35 @@ var defaults = {
 var opts = defaults;
 var timeout = false;
 
-function parseUrl1(data) {
-    var e=/^((http|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+\.[^#?\s]+)(#[\w\-]+)?$/;
+function parseUri (str) {
+	var	o   = parseUri.options,
+		m   = o.parser[o.strictMode ? "strict" : "loose"].exec(str),
+		uri = {},
+		i   = 14;
 
-    if (data.match(e)) {
-        return  {url: RegExp['$&'],
-                protocol: RegExp.$2,
-                host:RegExp.$3,
-                path:RegExp.$4,
-                file:RegExp.$6,
-                hash:RegExp.$7};
-    }
-    else {
-        return  {url:"", protocol:"",host:"",path:"",file:"",hash:""};
-    }
-}
+	while (i--) uri[o.key[i]] = m[i] || "";
 
- 	
+	uri[o.q.name] = {};
+	uri[o.key[12]].replace(o.q.parser, function ($0, $1, $2) {
+		if ($1) uri[o.q.name][$1] = $2;
+	});
+
+	return uri;
+};
+
+parseUri.options = {
+	strictMode: false,
+	key: ["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
+	q:   {
+		name:   "queryKey",
+		parser: /(?:^|&)([^&=]*)=?([^&]*)/g
+	},
+	parser: {
+		strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
+		loose:  /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/
+	}
+};
+
 function active_tiptip(control, html_contents){
 	
 	// Setup tip tip elements and render them to the DOM
@@ -135,7 +175,7 @@ function active_tiptip(control, html_contents){
 	
 	if (timeout){ clearTimeout(timeout); }
 	timeout = setTimeout(function(){ tiptip_holder.stop(true,true).fadeIn(opts.fadeIn); }, opts.delay);	
-}
+};
 
 function deactive_tiptip(){
 	var tiptip_holder = $("#tiptip_holder");
@@ -144,7 +184,7 @@ function deactive_tiptip(){
 	
 	if (timeout){ clearTimeout(timeout); }
 	tiptip_holder.fadeOut(opts.fadeOut);
-}
+};
 
 $(document).ready(function() {
 	
@@ -171,8 +211,8 @@ $(document).ready(function() {
 				}
 				
 				// don't peel long domain names, they are almost always direct
-				var url_parts = parseUrl1(href);
-				if (url_parts['host'].length > 7) {
+				var url_parts = parseUri(href);
+				if (url_parts['host'].length > 9) {
 					return;
 				}
 				

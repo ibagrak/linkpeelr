@@ -18,6 +18,8 @@
   	],
   	
   	"permissions": [
-    	"http://linkpeelr.appspot.com/*"
+    	"http://linkpeelr.appspot.com/*", 
+    	"http://platform.twitter.com/*", 
+    	"http://www.google-analytics.com/*"
 	]
 }
