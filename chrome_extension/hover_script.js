@@ -194,10 +194,14 @@ $(document).ready(function() {
 			var control = $(this);
 			var href = control.attr('href');
 			
-			if (href != null && href.length > 0) {
+			if (href == '') {
+				return;
+			}
+			
+			if (href.length > 0) {
 				// what we ignore: 
 				// self referential
-				if (href == '#') {
+				if (href.charAt(0) == '#') {
 					return;
 				// relative 
 				} else if (href.charAt(0) == '/') {
@@ -208,11 +212,18 @@ $(document).ready(function() {
 				// another prototype
 				} else if (href.length > 4 && href.substr(0, 4) != 'http') {
 					return;
+				} else if (href.length > 2 && href.substr(0, 2) == '..') {
+					return;
 				}
 				
-				// don't peel long domain names, they are almost always direct
+				// don't peel long URLs
+				if (href.length > 40) {
+					return;
+				}
+				// don't peel long domain names, they are almost always direct. 
+				// host without a dot typically means relative URL
 				var url_parts = parseUri(href);
-				if (url_parts['host'].length > 9) {
+				if (url_parts['host'].length > 11 || url_parts['host'].indexOf('.') == -1) {
 					return;
 				}
 				
@@ -222,6 +233,12 @@ $(document).ready(function() {
 					window.location.host.indexOf('bing') != -1) {
 					return;
 				}
+				
+				// within the domain
+				if (window.location.host == url_parts['host']) {
+					return;
+				}
+				
 			}
 			
 			control.removeAttr('title');
