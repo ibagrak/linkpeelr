@@ -238,7 +238,6 @@ $(document).ready(function() {
 				if (window.location.host == url_parts['host']) {
 					return;
 				}
-				
 			}
 			
 			control.removeAttr('title');
@@ -255,9 +254,7 @@ $(document).ready(function() {
 				control.attr("linkpeelr_cache", result);
 				active_tiptip(control, result);
 			}
-
-			// Send a request to fetch data from Twitter's API to the background page.
-			// Specify that onText should be called with the result.
+			
 			chrome.extension.sendRequest({'action' : 'peel', 'url' : href}, callback);
 				
 			// on mouseout

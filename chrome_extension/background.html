@@ -9,6 +9,30 @@
 </head>
 <body>
 <script>
+	function incrscore() {
+		
+		function inner_callback(cookie) {
+    		if (cookie == null) {
+    			return;
+    		}
+    		
+    		var score = parseInt(cookie.value);
+    		score = score + 1;
+    		
+    		chrome.cookies.set({'url'  : 'http://linkpeelr.appspot.com', 
+								'name' : 'peel_count', 
+								'value': score.toString()});
+			/* once we save the cookie, notify popup page */
+	  	  	function inner_callback(result) {};
+			chrome.extension.sendRequest({'action' : 'scoreup', 'value' : score.toString()}, inner_callback);
+    	};
+    	
+    	chrome.cookies.get({'url'  : 'http://linkpeelr.appspot.com', 
+							'name' : 'peel_count'}, 
+							inner_callback);
+		
+	};
+							
 	function peel(request, callback) {
 		var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function(data) {
@@ -23,7 +47,9 @@
 
   	  					if (data[1].length > 50) {
   	  	  					ellipses = "...";
-  	  					}		
+  	  					}
+  	  				
+  	  					incrscore();
   						callback("<a href='" + data[1] + "'>" + data[1].substr(0,50) + ellipses + "</a>");
   					/* got a direct link (e.g. 200) or error code (e.g. 404) doesn't matter) 
   			 		 * -> disable "Peel" button
@@ -39,29 +65,28 @@
                 	callback("Oops! Something is wrong..");
             	}
           	}
-        }
+        };
      	// Note that any URL fetched here must be matched by a permission in
         // the manifest.json file!
         var url = 'http://linkpeelr.appspot.com/api?action=' + request.action + '&url=' + request.url;
         xhr.open('GET', url, true);
         xhr.send();
-
-      };
-
-      /**
-       * Handles data sent via chrome.extension.sendRequest().
-       * @param request Object Data sent in the request.
-       * @param sender Object Origin of the request.
-       * @param callback Function The method to call when the request completes.
-       */
-      function onRequest(request, sender, callback) {
+	};
+	
+	/**
+	 * Handles data sent via chrome.extension.sendRequest().
+     * @param request Object Data sent in the request.
+     * @param sender Object Origin of the request.
+     * @param callback Function The method to call when the request completes.
+     */
+	function onRequest(request, sender, callback) {
         if (request.action == 'peel') {
-          peel(request, callback);
+          	peel(request, callback);
         }
-      };
+    };
 
-      // Wire up the listener.
-      chrome.extension.onRequest.addListener(onRequest);
+    // Wire up the listener.
+    chrome.extension.onRequest.addListener(onRequest);
 </script>
 </body>
 </html>
