@@ -194,6 +194,10 @@ $(document).ready(function() {
 			var control = $(this);
 			var href = control.attr('href');
 			
+			if (typeof(href) == "undefined") {
+				return;
+			}
+			
 			if (href == '') {
 				return;
 			}
