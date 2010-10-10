@@ -19,6 +19,10 @@ $(document).ready(function() {
 		}
 	});
 	
+	$("#ext_button").click(function() {
+		window.location = $("#ext_button").attr("href");
+	});
+	
 	$("#peel_button").click(function() {
 		var kvs = {}
 		

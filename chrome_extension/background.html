@@ -12,19 +12,21 @@
 	function incrscore() {
 		
 		function inner_callback(cookie) {
-    		if (cookie == null) {
-    			return;
+			var score = null;
+    		if (cookie != null) {
+				score = parseInt(cookie.value) + 1;
+    		} else {
+    			score = 0
     		}
-    		
-    		var score = parseInt(cookie.value);
-    		score = score + 1;
     		
     		chrome.cookies.set({'url'  : 'http://linkpeelr.appspot.com', 
 								'name' : 'peel_count', 
-								'value': score.toString()});
+								'value': score.toString(), 
+								'expirationDate' : 1444391372});
+								
 			/* once we save the cookie, notify popup page */
-	  	  	function inner_callback(result) {};
-			chrome.extension.sendRequest({'action' : 'scoreup', 'value' : score.toString()}, inner_callback);
+	  	  	function inner_inner_callback(result) {};
+			chrome.extension.sendRequest({'action' : 'scoreup', 'value' : score.toString()}, inner_inner_callback);
     	};
     	
     	chrome.cookies.get({'url'  : 'http://linkpeelr.appspot.com', 

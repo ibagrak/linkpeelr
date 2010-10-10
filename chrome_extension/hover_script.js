@@ -198,7 +198,7 @@ $(document).ready(function() {
 				return;
 			}
 			
-			if (href.length > 0) {
+			if (href != null && href.length > 0) {
 				// what we ignore: 
 				// self referential
 				if (href.charAt(0) == '#') {

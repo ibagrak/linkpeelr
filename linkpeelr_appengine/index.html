@@ -6,6 +6,7 @@
 <link rel="shortcut icon" href="http://linkpeelr.appspot.com/favicon.ico">
 <link href="/static/css/site.css" rel="stylesheet" type="text/css"/>
 
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script type="text/javascript" src="/static/linkpeelr.js"></script>
 <script type="text/javascript">
@@ -24,12 +25,18 @@
 </head>
 
 <body>
+
+<div id="feedback">
+	<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://linkpeelr.appspot.com" data-text="I am using LinkPeelr URL expander all over the web and you should too!" data-count="horizontal" data-via="ibagrak" data-related="linkpeelr">Tweet</a>
+	<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Flinkpeelr.appspot.com&amp;layout=button_count&amp;show_faces=true&amp;width=110&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:110px; height:21px;" allowTransparency="true"></iframe>
+</div>
 <div id="wrap">
+
 	<img id="logo" src="/static/redonion.png" />
 	<div id="intro_block">
-		<p/>Ever wonder where a link like <a href="http://bit.ly/9Uk1wi">http://bit.ly/9Uk1wi</a> will take you? Just copy the link into the field
+		<p/>Ever wonder where a link like <a href="http://bit.ly/9Uk1wi">http://bit.ly/9Uk1wi</a> will take you? Simply copy the link into the field
 		below and <span class="button_ref_text">Peel</span> it to find out. 
-		<p/>Got what you expected? Just click <span class="button_ref_text">Follow</span> to follow the link or <span class="button_ref_text">Peel</span> again.
+		<p/>Click <span class="button_ref_text">Follow</span> to follow the link or <span class="button_ref_text">Peel</span> again.
 	</div>
 	<form id="main_form" action="">
 		<input id="main_input" type="text" name="url_input" />
@@ -41,8 +48,9 @@
 		</div>
 	</form>
     <div id="download_block">
-		<p/><span class="button_ref_text">Peel</span> any link anywhere on the Web!
-		<p/><img class="bullet" src="http://www.google.com/intl/en/images/icons/about_chrome.gif"/>Chrome extension is <em>coming soon</em>
+		<div style="margin-left:-20px;font-size:20px">Hover your mouse over any link on the Web to <span style="font-weight:bold">Peel</span> it!</div>
+		<img class="screenshot" src="/static/feed.png" />
+		<button id="ext_button" class="g-button green" href="https://chrome.google.com/extensions/detail/ahhcmjnfhbpgagklnjhlcabnbcdgipje?hl=en"><img class="bullet" src="/static/chrome01.png"/>Download <span style="font-size:small"><br/>Chrome Extension</span></button>
 	</div>
 	<div id="bottom_menu">
 		<a href="http://twitter.com/ibagrak" title="my twitter">Twitter</a> 
@@ -50,7 +58,8 @@
 		<a href="http://codercofounder.wordpress.com" title="my blog">Blog</a> 
 		| 
 		<a href="http://github.com/ibagrak/linkpeelr" title="this code on GitHub">GitHub</a>
+		<div id="footer"> &copy; 2010 Ilya Bagrak. All Rights Reserved.</div>
 	</div>
-	<div id="footer"> &copy; 2010 Ilya Bagrak. All Rights Reserved.</div>
+	
 </div>
 </body>

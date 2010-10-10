@@ -17,12 +17,24 @@ body {
 	overflow-x:hidden; 
 	overflow-y: scroll}
 
+#feedback { 
+	float: right; 
+	max-width: 230px;  
+	margin-top: -16px; 
+	margin-right: -10px;
+	border-width: 1px; 
+	border-left-style: dashed;
+	border-bottom-style: dashed;
+	border-color: rgb(125, 17, 86);
+	padding: 10px 5px 5px 10px;
+	background: rgb(241, 241, 241); 
+	border-color: rgb(230,230,230);}
 #wrap { width: 560px; margin: 16px auto; }
 #logo { margin-left: 30px; width: 488px; height: 134px; max-width: 560px }
 #intro_block {
 	text-align: center;
 }
-#main_form { position: relative; width: 560px; min-height: 150px; }
+#main_form { position: relative; width: 560px; min-height: 140px; }
 
 #main_input { 	
 	position: relative;
@@ -63,7 +75,26 @@ button.g-button, a.g-button, input[type=submit].g-button {
 	text-shadow: 0px 1px 1px rgba(255,255,255,1);
 	font-size: large;
 	line-height: 1; }
+
+.g-button.green {
+	float:left;
+	margin: 35px 0px 0px 20px;
+	padding: 10px 5px;
+	min-width: 150px;
+	font-size: large;
+	font-weight: bold;
+	border: solid 1px rgb(153, 153, 153);
+	text-shadow: 0px 1px 1px rgba(255,255,255,1);
+	text-align: left;
+	-webkit-border-radius: 8px 8px;
 	
+	background: #A5D37A; /* old browsers */
+	background: -moz-linear-gradient(top, #A5D37A 1%, #78C436 100%); /* firefox */
+
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#A5D37A), color-stop(100%,#78C436)); /* webkit */
+
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#A5D37A', endColorstr='#78C436',GradientType=0 ); /* ie */
+}
 .g-button:active {
 	position: relative;
 	top: 2px; }
@@ -104,18 +135,30 @@ button.g-button, a.g-button, input[type=submit].g-button {
 	
 img.bullet
 {
-	vertical-align:middle;
+	float: left;
+	vertical-align:top;
+	padding-left: 5px;
 	padding-right: 5px;
+	height: 34px;
+}
+
+img.screenshot {
+	margin: 10px 10px 0px 100px;
+	border: dashed 2px rgb(211, 231, 187);
+	float: left;
 }
 
 #download_block {
 	text-align: center;
-	background: rgb(253,254,182); 
-	width: 280px;
-	margin-left:120px;
-	padding: 10px 30px 10px 30px;
-	-webkit-box-shadow: 3px 3px 4px #000;
-	box-shadow: 3px 3px 4px #000;}
+	border-style: solid;
+	border-width: 1px 0px 1px 0px; 
+	border-color: rgb(230,230,230);
+	background: rgb(241, 241, 241); 
+	width: 640px;
+	margin-left: -40px;
+	height: 150px;
+	padding: 10px 20px 10px 20px;
+}
 
 #bottom_menu {
 	margin-top: 20px;
