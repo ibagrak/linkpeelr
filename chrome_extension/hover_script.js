@@ -34,6 +34,7 @@
 
 var imgURL = chrome.extension.getURL("ajax-loader.gif");
 var animation = "<img src='" + imgURL + "'/>";
+
 var defaults = { 
 		activation: "hover",
 		keepAlive: false,
@@ -186,7 +187,20 @@ function deactive_tiptip(){
 	tiptip_holder.fadeOut(opts.fadeOut);
 };
 
+
+var x;
+var y;
+
 $(document).ready(function() {
+	
+	$("body").mousemove(function (event) {
+		x = event.pageX; 
+		y = event.pageY;
+	});
+	
+	$("a").live('click', function(event) {
+		deactive_tiptip();
+	});
 	
 	$("a").live('mouseover mouseout', function(event) {
 		// on mouseover
@@ -208,7 +222,7 @@ $(document).ready(function() {
 				if (href.charAt(0) == '#') {
 					return;
 				// relative 
-				} else if (href.charAt(0) == '/') {
+				} else if (href.charAt(0) == '/' || href.charAt(0) == '.') {
 					return;
 				// secure
 				} else if (href.length > 5 && href.substr(0, 5) == 'https') {
@@ -216,12 +230,10 @@ $(document).ready(function() {
 				// another prototype
 				} else if (href.length > 4 && href.substr(0, 4) != 'http') {
 					return;
-				} else if (href.length > 2 && href.substr(0, 2) == '..') {
-					return;
-				}
+				} 
 				
 				// don't peel long URLs
-				if (href.length > 40) {
+				if (href.length > 30) {
 					return;
 				}
 				// don't peel long domain names, they are almost always direct. 
@@ -256,12 +268,20 @@ $(document).ready(function() {
 			/* callback for ajax peel */
 			function callback(result) {
 				control.attr("linkpeelr_cache", result);
-				active_tiptip(control, result);
+				
+				var top = parseInt(control.offset()['top']);
+				var left = parseInt(control.offset()['left']);
+				var org_width = parseInt(control.outerWidth());
+				var org_height = parseInt(control.outerHeight());
+				
+				if (y >= top && y <= top + org_height && x >= left && x <= left + org_width) {
+					active_tiptip(control, result);
+				}
 			}
 			
 			chrome.extension.sendRequest({'action' : 'peel', 'url' : href}, callback);
 				
-			// on mouseout
+		// on mouseout
 		} else if (event.type == 'mouseout') {
 			deactive_tiptip();
 		} 

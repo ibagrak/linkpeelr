@@ -9,6 +9,16 @@
 </head>
 <body>
 <script>
+	var version = getVersion();
+
+	function getVersion() {
+    	var xhr = new XMLHttpRequest();
+    	xhr.open('GET', chrome.extension.getURL('manifest.json'), false);
+    	xhr.send(null);
+    	var manifest = JSON.parse(xhr.responseText);
+    	return manifest.version;
+	}
+
 	function incrscore() {
 		
 		function inner_callback(cookie) {
@@ -70,7 +80,7 @@
         };
      	// Note that any URL fetched here must be matched by a permission in
         // the manifest.json file!
-        var url = 'http://linkpeelr.appspot.com/api?action=' + request.action + '&url=' + request.url;
+        var url = 'http://linkpeelr.appspot.com/api?action=' + request.action + '&url=' + request.url + '&version=' + version;
         xhr.open('GET', url, true);
         xhr.send();
 	};
