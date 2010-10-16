@@ -16,11 +16,12 @@ body {
 	color: #444444; 
 	overflow-x:hidden; 
 	overflow-y: scroll}
+embel {font-weight:bold;}
 
 #feedback { 
 	float: right; 
-	max-width: 230px;  
-	margin-top: -16px; 
+	max-width: 240px;  
+	margin-top: -25px; 
 	margin-right: -10px;
 	border-width: 1px; 
 	border-left-style: dashed;
@@ -29,7 +30,7 @@ body {
 	padding: 10px 5px 5px 10px;
 	background: rgb(241, 241, 241); 
 	border-color: rgb(230,230,230);}
-#wrap { width: 560px; margin: 16px auto; }
+#wrap { width: 560px; margin: 25px auto; }
 #logo { margin: 0px 0px 15px 50px; max-width: 450px; }
 #intro_block {
 	text-align: center;
