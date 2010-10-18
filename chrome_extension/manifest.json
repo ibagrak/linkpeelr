@@ -27,7 +27,7 @@
   		"cookies",
     	"http://linkpeelr.appspot.com/*", 
     	"http://platform.twitter.com/*", 
-    	"http://www.google-analytics.com/*",
+    	"https://www.google-analytics.com/*",
 		"http://ajax.googleapis.com/ajax/libs/jquery/*"
 	]
 }

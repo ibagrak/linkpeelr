@@ -6,6 +6,7 @@
 -->
 <html>
 <head>
+
 </head>
 <body>
 <script>
@@ -15,7 +16,7 @@
 
      (function() {
        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-       ga.src = 'https://ssl.google-analytics.com/ga.js';
+       ga.src = 'http://ssl.google-analytics.com/ga.js';
        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
      })();
 </script>
@@ -111,5 +112,6 @@
     // Wire up the listener.
     chrome.extension.onRequest.addListener(onRequest);
 </script>
+
 </body>
 </html>
