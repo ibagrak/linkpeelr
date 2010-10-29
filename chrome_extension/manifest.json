@@ -1,6 +1,6 @@
 {
 	"name": "LinkPeelr",
-	"version": "1.4",
+	"version": "1.5",
 	"description": "Know Where Link Is Going Before You Click",
 	"browser_action": {
     	"default_icon": "linkpeelr16.png",
@@ -27,7 +27,7 @@
   		"cookies",
     	"http://linkpeelr.appspot.com/*", 
     	"http://platform.twitter.com/*", 
-    	"http://www.google-analytics.com/*",
+    	"https://ssl.google-analytics.com/*",
 		"http://ajax.googleapis.com/ajax/libs/jquery/*"
 	]
 }
