@@ -1,11 +1,7 @@
 {
 	"name": "LinkPeelr",
-	"version": "1.5",
+	"version": "1.6",
 	"description": "Know Where Link Is Going Before You Click",
-	"browser_action": {
-    	"default_icon": "linkpeelr16.png",
-    	"popup": "popup.html"
-	},
 	
 	"icons": {
 		"16": "linkpeelr16.png", 
