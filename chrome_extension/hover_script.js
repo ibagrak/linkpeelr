@@ -202,7 +202,8 @@ $(document).ready(function() {
 		deactive_tiptip();
 	});
 	
-	$("a").live('mouseover mouseout', function(event) {
+	// Ignore links which already show a Twitter @anywhere popup on mouseover
+	$("a:not(.twitter-anywhere-user)").live('mouseover mouseout', function(event) {
 		// on mouseover
 		if (event.type == 'mouseover') {
 			var control = $(this);
