@@ -280,7 +280,7 @@ $(document).ready(function() {
 				}
 			}
 			
-			chrome.extension.sendRequest({'action' : 'peel', 'url' : href}, callback);
+			chrome.extension.sendRequest({'action' : 'peel', 'url' : href, 'where' : window.location.host}, callback);
 				
 		// on mouseout
 		} else if (event.type == 'mouseout') {
