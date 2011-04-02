@@ -5,21 +5,28 @@ Created on 26.9.2010
 '''
 __author__ = "Ilya Bagrak <ilya.bagrak@gmail.com>"
 
-#import os
 import logging
-import urllib2
 
 from django.utils import simplejson
 
+from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
-from google.appengine.ext.webapp import template
 from google.appengine.api import urlfetch
 
 import settings
 
+
 logger = logging.getLogger('api')
 logger.setLevel(logging.DEBUG)
+
+class Peeled(db.Model):
+    updated = db.DateTimeProperty(auto_now = True)
+    unpeeled = db.URLProperty(required = True)
+    peeled = db.URLProperty(required = True)
+    
+    where = db.StringProperty(required = True)
+    ip = db.StringProperty(required = True)
 
 class APIHandler(webapp.RequestHandler):
     """ 
@@ -33,26 +40,44 @@ class APIHandler(webapp.RequestHandler):
         
         for arg in args:
             kvs[arg] = self.request.get(arg)
+        kvs['ip'] = self.request.remote_addr
         
         if not action in settings.APIS:
             result = (settings.INVALID_API_ERROR)
         else:    
             result = getattr(self, action)(kvs)
                 
-        logger.debug("got result %s" % str(result))
-        logger.debug("simplejson.dumps %s" % simplejson.dumps(result))
+        logger.debug("JSON result %s" % simplejson.dumps(result))
         self.response.out.write(simplejson.dumps(result))
         
     def peel(self, kvs):
-        logging.debug("got a peel action w/ %s" % str(kvs))
-        url = kvs["url"]
+        logger.debug("peel req: %s" % str(kvs))
+        url = kvs['url']
+        ver = kvs['version']
+        store_last = False
         result = {}
         
+        
+        if ver == "1.7.0" or ver == "1.7.1":
+            store_last = True
+            
         try: 
             result = urlfetch.fetch(url, method = urlfetch.HEAD, follow_redirects = False, deadline = 1)
             code = result.status_code
             if code == 301 or code == 302:
                 result = (int(code), result.headers['Location'])
+                
+                if store_last:
+                    entity = db.Query(Peeled).get()
+                    if entity:
+                        entity.unpeeled = url
+                        entity.peeled = result[1]
+                        entity.where = kvs['where']
+                        entity.ip = kvs['ip']
+                    else:
+                        entity = Peeled(unpeeled = url, peeled = result[1], where = kvs['where'], ip = kvs['ip'])
+                
+                    entity.put()
             else:
                 result = (int(code))
             
@@ -62,16 +87,25 @@ class APIHandler(webapp.RequestHandler):
             result = (settings.DOWNLOAD_ERROR)
         except:
             result = (settings.GENERAL_ERROR)
-        
+
         return result
 
     def peel_all(self, kvs):
         pass
     
+    def last(self, kvs):
+        logger.debug("last req: %s" % str(kvs))
+        entity = db.Query(Peeled).get()
+        
+        if entity:
+            return (settings.OK, [str(entity.updated), entity.unpeeled, entity.peeled, entity.where, entity.ip])
+        else:
+            return (settings.GENERAL_ERROR)
+        
 def main():
     logger = logging.getLogger('api')
     logger.setLevel(logging.DEBUG)
-    application = webapp.WSGIApplication([('/api', APIHandler)], debug=True)
+    application = webapp.WSGIApplication([('/api', APIHandler)], debug=False)
     run_wsgi_app(application)
 
 if __name__ == '__main__':
