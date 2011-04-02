@@ -228,7 +228,7 @@ $(document).ready(function() {
 				// secure
 				} else if (href.length > 5 && href.substr(0, 5) == 'https') {
 					return;
-				// another prototype
+				// another protocol
 				} else if (href.length > 4 && href.substr(0, 4) != 'http') {
 					return;
 				} 
@@ -237,10 +237,21 @@ $(document).ready(function() {
 				if (href.length > 30) {
 					return;
 				}
+				
+				// shortened urls never end in '/'
+				if (href.charAt(href.length - 1) == '/') {
+					return;
+				}
+				
 				// don't peel long domain names, they are almost always direct. 
 				// host without a dot typically means relative URL
 				var url_parts = parseUri(href);
 				if (url_parts['host'].length > 11 || url_parts['host'].indexOf('.') == -1) {
+					return;
+				}
+				
+				if (/imgur.com$/.test(url_parts['host']) || 
+					/twitter.com$/.test(url_parts['host'])) {
 					return;
 				}
 				
