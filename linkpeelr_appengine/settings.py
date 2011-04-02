@@ -5,7 +5,7 @@ Created on Sep 26, 2010
 '''
 __author__ = "Ilya Bagrak <ilya.bagrak@gmail.com>"
 
-APIS = ['peel', 'peel_all']
+APIS = ['peel', 'peel_all', 'last']
 
 OK = 0
 INVALID_API_ERROR = 1

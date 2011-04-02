@@ -5,8 +5,13 @@ Created on Sep 23, 2010
 '''
 __author__ = "Ilya Bagrak <ilya.bagrak@gmail.com>"
 
-import logging
 import os
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+from google.appengine.dist import use_library
+use_library('django', '0.96')
+
+import logging
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
