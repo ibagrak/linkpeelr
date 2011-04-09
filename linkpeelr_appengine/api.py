@@ -80,11 +80,11 @@ class APIHandler(webapp.RequestHandler):
                 result = (int(code), )
             
         except urlfetch.InvalidURLError:
-            result = (settings.INVALID_URL_ERROR)
+            result = (settings.INVALID_URL_ERROR,)
         except urlfetch.DownloadError:
-            result = (settings.DOWNLOAD_ERROR)
+            result = (settings.DOWNLOAD_ERROR,)
         except:
-            result = (settings.GENERAL_ERROR)
+            result = (settings.GENERAL_ERROR,)
 
         return result
 
