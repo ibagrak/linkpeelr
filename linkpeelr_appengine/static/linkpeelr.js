@@ -129,6 +129,7 @@ function headline_rotate() {
 	
 	kvs = {}
 	kvs['action'] = 'last';
+	kvs['version'] = '1.7.2';
 	
 	if (kvs['url'] != '') {
 		$.ajax({

@@ -53,12 +53,10 @@ class APIHandler(webapp.RequestHandler):
     def peel(self, kvs):
         logger.debug("peel req: %s" % str(kvs))
         url = kvs['url']
-        ver = kvs['version']
         store_last = False
         result = {}
         
-        
-        if ver == "1.7.0" or ver == "1.7.1":
+        if 'version' in kvs and (kvs['version'] > "1.7"):
             store_last = True
             
         try: 
@@ -79,7 +77,7 @@ class APIHandler(webapp.RequestHandler):
                 
                     entity.put()
             else:
-                result = (int(code))
+                result = (int(code), )
             
         except urlfetch.InvalidURLError:
             result = (settings.INVALID_URL_ERROR)
@@ -91,8 +89,17 @@ class APIHandler(webapp.RequestHandler):
         return result
 
     def peel_all(self, kvs):
-        pass
-    
+        logger.debug("peel all req: %s" % str(kvs))
+        
+        last_good_result = result = self.peel(kvs)
+        
+        while (result[0] == 301 or result[0] == 302):
+            last_good_result = result
+            kvs['url'] = result[1]
+            result = self.peel(kvs)
+            
+        return last_good_result
+
     def last(self, kvs):
         logger.debug("last req: %s" % str(kvs))
         entity = db.Query(Peeled).get()
