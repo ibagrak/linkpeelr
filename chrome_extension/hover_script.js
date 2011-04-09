@@ -291,7 +291,7 @@ $(document).ready(function() {
 				}
 			}
 			
-			chrome.extension.sendRequest({'action' : 'peel', 'url' : href, 'where' : window.location.host}, callback);
+			chrome.extension.sendRequest({'action' : 'peel_all', 'url' : href, 'where' : window.location.host}, callback);
 				
 		// on mouseout
 		} else if (event.type == 'mouseout') {
