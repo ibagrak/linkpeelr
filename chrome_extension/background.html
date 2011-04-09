@@ -59,7 +59,7 @@
 		
 	};
 							
-	function peel(request, callback) {
+	function peel_all(request, callback) {
 		var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function(data) {
         	if (xhr.readyState == 4) {
@@ -106,8 +106,8 @@
      * @param callback Function The method to call when the request completes.
      */
 	function onRequest(request, sender, callback) {
-        if (request.action == 'peel') {
-          	peel(request, callback);
+        if (request.action == 'peel_all') {
+          	peel_all(request, callback);
         }
     };
 
