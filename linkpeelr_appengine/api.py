@@ -50,7 +50,7 @@ class APIHandler(webapp.RequestHandler):
         logger.debug("JSON result %s" % simplejson.dumps(result))
         self.response.out.write(simplejson.dumps(result))
         
-    def peel(self, kvs):
+    def peel(self, kvs, orig_url = None):
         logger.debug("peel req: %s" % str(kvs))
         url = kvs['url']
         store_last = False
@@ -68,7 +68,10 @@ class APIHandler(webapp.RequestHandler):
                 if store_last:
                     entity = db.Query(Peeled).get()
                     if entity:
-                        entity.unpeeled = url
+                        if orig_url:
+                            entity.unpeeled = orig_url
+                        else:
+                            entity.unpeeled = url
                         entity.peeled = result[1]
                         entity.where = kvs['where']
                         entity.ip = kvs['ip']
@@ -91,12 +94,13 @@ class APIHandler(webapp.RequestHandler):
     def peel_all(self, kvs):
         logger.debug("peel all req: %s" % str(kvs))
         
-        last_good_result = result = self.peel(kvs)
+        orig_url = kvs['url']
+        last_good_result = result = self.peel(kvs, orig_url = orig_url)
         
         while (result[0] == 301 or result[0] == 302):
             last_good_result = result
             kvs['url'] = result[1]
-            result = self.peel(kvs)
+            result = self.peel(kvs, orig_url = orig_url)
             
         return last_good_result
 

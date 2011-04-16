@@ -109,7 +109,8 @@ function headline_rotate() {
 						'<span class="from" style="font-size:small"><a href="' + unpeeled + '">' + unpeeled + '</a></span> <br> \
 						&dArr;<br> \
 						<span class="to"><a href="' + peeled + '">' + peeled.substr(0,50) + ellipses + '</a></span><br> \
-						<div id="peeled_info">peeled while browsing <em>' + where + '</em> from unknown location</div>');
+						<div id="peeled_info">peeled while browsing <em>' + where + '</em> from ' + 
+						'<img style="vertical-align:text-top" height="12px" src="http://api.hostip.info/flag.php?ip=' + ip + '"></div>');
 				
 				$("div.headline:eq(" + current_headline + ")").removeClass('empty');
 				$("div.headline:eq(" + current_headline + ")").attr('id', key)
