@@ -172,8 +172,8 @@ img.screenshot {
 
 #test_scroller {
 	margin-top: 10px;
-	margin-left: 100px;
-	max-width: 400px;
+	margin-left: 20px;
+	max-width: 600px;
 	height: 82px;	
 	display: block;
 	position: relative;
@@ -184,7 +184,7 @@ img.screenshot {
 }
 
 #peeled_info {
-	width: 400px;
+	width: 600px;
 	position: absolute;
 	display: block;
 	bottom: 0px;
@@ -215,8 +215,7 @@ img.screenshot {
   position: absolute;
   top: 80px;
   height: 75px;
-  width: 400px;
-  
+  width: 600px;
 }
 
 #bottom_menu {
