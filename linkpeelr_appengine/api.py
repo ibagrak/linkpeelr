@@ -6,7 +6,6 @@ Created on 26.9.2010
 __author__ = "Ilya Bagrak <ilya.bagrak@gmail.com>"
 
 import logging
-import datetime
 
 from django.utils import simplejson
 
@@ -14,13 +13,20 @@ from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.api import urlfetch
-from google.appengine.api import memcache
 
 import settings
 
 
 logger = logging.getLogger('api')
 logger.setLevel(logging.DEBUG)
+
+class Peeled(db.Model):
+    updated = db.DateTimeProperty(auto_now = True)
+    unpeeled = db.URLProperty(required = True)
+    peeled = db.URLProperty(required = True)
+    
+    where = db.StringProperty(required = True)
+    ip = db.StringProperty(required = True)
 
 class APIHandler(webapp.RequestHandler):
     """ 
@@ -49,6 +55,9 @@ class APIHandler(webapp.RequestHandler):
         url = kvs['url']
         store_last = False
         result = {}
+        
+        if 'version' in kvs and (kvs['version'] > "1.7"):
+            store_last = True
             
         try: 
             result = urlfetch.fetch(url, method = urlfetch.HEAD, follow_redirects = False, deadline = 1)
@@ -56,12 +65,20 @@ class APIHandler(webapp.RequestHandler):
             if code == 301 or code == 302:
                 result = (int(code), result.headers['Location'])
                 
-                last = {'time'     : str(datetime.datetime.now()),
-                        'unpeeled' : url, 
-                        'peeled'   : result[1], 
-                        'where'    : kvs['where'], 
-                        'ip'       : kvs['ip'] }
-                memcache.set(key = "last", value = last, time = 3600)  
+                if store_last:
+                    entity = db.Query(Peeled).get()
+                    if entity:
+                        if orig_url:
+                            entity.unpeeled = orig_url
+                        else:
+                            entity.unpeeled = url
+                        entity.peeled = result[1]
+                        entity.where = kvs['where']
+                        entity.ip = kvs['ip']
+                    else:
+                        entity = Peeled(unpeeled = url, peeled = result[1], where = kvs['where'], ip = kvs['ip'])
+                
+                    entity.put()
             else:
                 result = (int(code), )
             
@@ -89,11 +106,10 @@ class APIHandler(webapp.RequestHandler):
 
     def last(self, kvs):
         logger.debug("last req: %s" % str(kvs))
+        entity = db.Query(Peeled).get()
         
-        kvs = memcache.get("last")
-        
-        if kvs:
-            return (settings.OK, [kvs['time'], kvs['unpeeled'], kvs['peeled'], kvs['where'], kvs['ip']])
+        if entity:
+            return (settings.OK, [str(entity.updated), entity.unpeeled, entity.peeled, entity.where, entity.ip])
         else:
             return (settings.GENERAL_ERROR)
         

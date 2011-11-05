@@ -58,7 +58,7 @@ $(document).ready(function() {
 		kvs['action'] = 'peel';
 		kvs['url'] = $("#main_input").val();
 		kvs['where'] = 'linkpeelr.appspot.com';
-		kvs['version'] = '1.7.2';
+		kvs['version'] = '1.7.6';
 		
 		if (kvs['url'] != '') {
 			$.ajax({
@@ -130,7 +130,7 @@ function headline_rotate() {
 	
 	kvs = {}
 	kvs['action'] = 'last';
-	kvs['version'] = '1.7.2';
+	kvs['version'] = '1.7.6';
 	
 	if (kvs['url'] != '') {
 		$.ajax({
