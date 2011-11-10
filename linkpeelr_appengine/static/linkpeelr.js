@@ -7,6 +7,7 @@ var headline_count;
 var headline_interval;
 var current_headline = 0;
 var old_headline = 0;
+var max_rotations = 500;
 
 $(document).ready(function() {
 	headline_count = $("div.headline").size();
@@ -80,6 +81,21 @@ $(document).ready(function() {
 
 function headline_rotate() {
 	current_headline = (old_headline + 1) % headline_count;
+	max_rotations = max_rotations - 1;
+	
+	// prevent infinite API call if they leave the webpage loaded for a long time
+	if (max_rotations < 0) {
+	    $("div.headline:eq(" + old_headline + ")")
+        .animate({top: -95},"slow", function() {
+            $(this).css('top', '95px');
+        });
+    
+	    $("div.headline:eq(" + current_headline + ")")
+        .animate({top: 0},"slow");
+
+	    old_headline = current_headline;
+	    return;
+	}
 	
 	function callback(result) {
 		var error_code = result[0];

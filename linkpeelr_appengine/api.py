@@ -56,7 +56,7 @@ class APIHandler(webapp.RequestHandler):
                 result = (int(code), result.headers['Location'])
                 
                 last = {'time'     : str(datetime.datetime.now()),
-                        'unpeeled' : orig_url, 
+                        'unpeeled' : orig_url if orig_url else url, 
                         'peeled'   : result[1], 
                         'where'    : kvs['where'], 
                         'ip'       : kvs['ip'] }
