@@ -8,13 +8,12 @@ __author__ = "Ilya Bagrak <ilya.bagrak@gmail.com>"
 import logging
 import datetime
 
-from django.utils import simplejson
-
-from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.api import urlfetch
 from google.appengine.api import memcache
+
+from django.utils import simplejson
 
 import settings
 
