@@ -209,11 +209,7 @@ $(document).ready(function() {
 			var control = $(this);
 			var href = control.attr('href');
 			
-			if (typeof(href) == "undefined") {
-				return;
-			}
-			
-			if (href == '') {
+			if (typeof(href) == "undefined" || href === '') {
 				return;
 			}
 			
@@ -299,6 +295,3 @@ $(document).ready(function() {
 		} 
 	});
 });
-
-
-
