@@ -1,4 +1,3 @@
-
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-18747503-1']);
 _gaq.push(['_trackPageview']);
@@ -9,16 +8,47 @@ _gaq.push(['_trackPageview']);
   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
 
-var version = getVersion();
-
 function getVersion() {
-  	var xhr = new XMLHttpRequest();
-  	xhr.open('GET', chrome.extension.getURL('manifest.json'), false);
-  	xhr.send(null);
-  	var manifest = JSON.parse(xhr.responseText);
-  	return manifest.version;
+  var details = chrome.app.getDetails();
+  return details.version;
 }
-						
+
+// Check if the version has changed.
+var currVersion = getVersion();
+
+// Show surveys to 20% (~600 people)
+var show = Math.floor(Math.random() * 5) == 0 ? true : false;
+
+function onInstall() {
+  console.log("Extension Installed");
+
+  if (show && typeof localStorage['survey_' + currVersion] == 'undefined') {
+    chrome.tabs.create({'url' : 'http://linkpeelr.appspot.com?v=' + escape(currVersion) + '&new_install=true'}); 
+    localStorage['survey_' + currVersion] = true;
+  }
+}
+
+function onUpdate() {
+  console.log("Extension Installed");
+
+  if (show && typeof localStorage['survey_' + currVersion] == 'undefined') {
+    chrome.tabs.create({'url' : 'http://linkpeelr.appspot.com?v=' + escape(currVersion)});
+    localStorage['survey_' + currVersion] = true; 
+  }
+}
+
+var prevVersion = localStorage['version'];
+
+if (currVersion != prevVersion) {
+  // Check if we just installed this extension.
+  if (typeof prevVersion == 'undefined') {
+    onInstall();
+  } else {
+    onUpdate();
+  }
+  localStorage['version'] = currVersion;
+}
+
 function peel_all(request, callback) {
 	var xhr = new XMLHttpRequest();
   
@@ -54,7 +84,7 @@ function peel_all(request, callback) {
   
    	// Note that any URL fetched here must be matched by a permission in
     // the manifest.json file!
-    var url = 'http://linkpeelr.appspot.com/api?action=' + request.action + '&url=' + request.url + '&where=' + request.where + '&version=' + version;
+    var url = 'http://linkpeelr.appspot.com/api?action=' + request.action + '&url=' + request.url + '&where=' + request.where + '&version=' + currVersion;
     xhr.open('GET', url, true);
     xhr.send();
   };
@@ -73,3 +103,5 @@ function onRequest(request, sender, callback) {
 
 // Wire up the listener.
 chrome.extension.onRequest.addListener(onRequest);
+
+
