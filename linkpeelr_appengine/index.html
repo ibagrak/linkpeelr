@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>LinkPeelr - Know Where Link Is Going Before You Click</title>
+<link href='http://fonts.googleapis.com/css?family=Philosopher&subset=latin' rel='stylesheet' type='text/css'>
+<link rel="shortcut icon" href="http://linkpeelr.appspot.com/favicon.ico">
+<link href="/static/css/site.css" rel="stylesheet" type="text/css"/>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/linkpeelr.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18747503-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+
+<div id="feedback">
+	<iframe allowtransparency="false" frameborder="0" scrolling="no"
+        src="http://platform.twitter.com/widgets/tweet_button.html?url=http%3A%2F%2Flinkpeelr.appspot.com&amp;via=ibagrak&amp;text=I am using LinkPeelr URL expander all over the web and you should too!"
+        style="width:110px; height:20px;"></iframe>
+	<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Flinkpeelr.appspot.com&amp;layout=button_count&amp;show_faces=true&amp;width=110&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:110px; height:21px;" allowTransparency="true"></iframe>
+</div>
+<div id="wrap">
+
+	<img id="logo" src="/static/redonion.png" />
+	<div id="intro_block">
+		<p/>Ever wonder where a link like <a href="http://bit.ly/9Uk1wi">http://bit.ly/9Uk1wi</a> will take you? Simply copy the link into the field
+		below and <span class="button_ref_text">Peel</span> it to find out. 
+		<p/>Click <span class="button_ref_text">Follow</span> to follow the link or <span class="button_ref_text">Peel</span> again.
+	</div>
+	<form id="main_form" action="">
+		<input id="main_input" type="text" name="url_input" />
+		<div id="left_menu_col">
+			<button id="peel_button" class="g-button opink left_button">Peel</button>
+		</div>
+		<div id="right_menu_col">
+			<button id="follow_button" class="g-button ogreen right_button">Follow</button>
+		</div>
+	</form>
+    <div id="download_block">
+		<div class="dload_header">Just hover the mouse over <span style="background:rgb(241, 213, 231)">&nbsp;any link on any website&nbsp;</span> to <span class="button_ref_text" style="font-size:x-large;font-weight:bold;">Peel</span> it!</div>
+		
+		<img class="screenshot" src="/static/feed.png" />
+		<button id="ext_button" class="g-button green" href="https://chrome.google.com/extensions/detail/ahhcmjnfhbpgagklnjhlcabnbcdgipje?hl=en">
+			<img class="bullet" src="/static/chrome01.png"/>
+			Download <span style="font-size:small"><br/>LinkPeelr for Chrome</span>
+		</button>
+		<div class="dload_header" style="clear:both;">
+			Or see what <span class="num_users">3000</span> LinkPeelr users are peeling right now.
+		</div>
+		<div id="test_scroller">
+			<div class="headline">
+				Loading activity stream. Please wait...
+			</div>
+			<div class="headline">
+				Loading activity stream. Please wait...
+			</div>
+			<div class="headline">
+				Loading activity stream. Please wait...
+			</div>
+		</div>
+	</div>
+	<div id="bottom_menu">
+		<a href="http://twitter.com/ibagrak" title="my twitter">Twitter</a> 
+		| 
+		<a href="http://codercofounder.wordpress.com" title="my blog">Blog</a> 
+		| 
+		<a href="http://github.com/ibagrak/linkpeelr" title="this code on GitHub">GitHub</a>
+		<div id="footer"> &copy; 2011 Ilya Bagrak. All Rights Reserved.</div>
+	</div>
+	
+</div>
+</body>

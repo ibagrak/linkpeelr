@@ -1,0 +1,14 @@
+LinkPeelr is a simple utility built with Google App Engine. 
+
+Main ideas: 
+1) Let people see where the link is going before they click. 
+ - primarily for links hidden behind URL shorteners, 
+ - also for links behind redirects
+2) Works on any site
+ - as a Chrome extension
+ - as a Firefox plugin
+3) Lets me learn the tech
+ - Clean web design (jQuery, JavaScript-ed UI, Illustrator)
+ - Google App Engine
+ - Google Chrome Extensions
+ 
