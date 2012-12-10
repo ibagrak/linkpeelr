@@ -246,8 +246,7 @@ $(document).ready(function() {
 					return;
 				}
 				
-				if (/imgur.com$/.test(url_parts['host']) || 
-					/twitter.com$/.test(url_parts['host'])) {
+				if (/imgur.com$/.test(url_parts['host'])) {
 					return;
 				}
 				
