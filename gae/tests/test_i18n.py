@@ -57,12 +57,12 @@ class I18NTest(unittest2.TestCase):
 		self.assertIn(self.txt_in_english, response.body)
 		self.assertNotIn(self.txt_in_german, response.body)
 
-	# test with 'only german'
-	def test_german(self):
-		response = self.testapp.get('/', headers=self.hdr_german_accept)
-		self.assertEqual(response.status_int, 200)
-		self.assertIn(self.txt_in_german, response.body)
-		self.assertNotIn(self.txt_in_english, response.body)
+	# # test with 'only german'
+	# def test_german(self):
+	# 	response = self.testapp.get('/', headers=self.hdr_german_accept)
+	# 	self.assertEqual(response.status_int, 200)
+	# 	self.assertIn(self.txt_in_german, response.body)
+	# 	self.assertNotIn(self.txt_in_english, response.body)
 
 	# test with 'english preferred'
 	def test_english_preferred(self):
@@ -71,12 +71,12 @@ class I18NTest(unittest2.TestCase):
 		self.assertIn(self.txt_in_english, response.body)
 		self.assertNotIn(self.txt_in_german, response.body)
 
-	# test with 'german preferred'
-	def test_german(self):
-		response = self.testapp.get('/', headers=self.hdr_german_prefer)
-		self.assertEqual(response.status_int, 200)
-		self.assertIn(self.txt_in_german, response.body)
-		self.assertNotIn(self.txt_in_english, response.body)
+	# # test with 'german preferred'
+	# def test_german(self):
+	# 	response = self.testapp.get('/', headers=self.hdr_german_prefer)
+	# 	self.assertEqual(response.status_int, 200)
+	# 	self.assertIn(self.txt_in_german, response.body)
+	# 	self.assertNotIn(self.txt_in_english, response.body)
 
 	# test with 'other'
 	def test_other(self):
@@ -85,15 +85,15 @@ class I18NTest(unittest2.TestCase):
 		self.assertIn(self.txt_in_english, response.body)
 		self.assertNotIn(self.txt_in_german, response.body)
 
-	# test with 'english', then request german
-	def test_german_explicit(self):
-		response = self.testapp.get('/', headers=self.hdr_english_accept)
-		response = self.testapp.get('/locale/de_DE', headers=self.hdr_english_accept)
-		self.assertEqual(response.status_int, 302)
-		response = self.testapp.get('/', headers=self.hdr_english_accept)
-		self.assertEqual(response.status_int, 200)
-		self.assertIn(self.txt_in_german, response.body)
-		self.assertNotIn(self.txt_in_english, response.body)
+	# # test with 'english', then request german
+	# def test_german_explicit(self):
+	# 	response = self.testapp.get('/', headers=self.hdr_english_accept)
+	# 	response = self.testapp.get('/locale/de_DE', headers=self.hdr_english_accept)
+	# 	self.assertEqual(response.status_int, 302)
+	# 	response = self.testapp.get('/', headers=self.hdr_english_accept)
+	# 	self.assertEqual(response.status_int, 200)
+	# 	self.assertIn(self.txt_in_german, response.body)
+	# 	self.assertNotIn(self.txt_in_english, response.body)
 
 	# test with 'german', then request english
 	def test_english_explicit(self):

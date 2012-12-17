@@ -22,19 +22,19 @@ var show = Math.floor(Math.random() * 5) == 0 ? true : false;
 function onInstall() {
   console.log("Extension Installed");
 
-  if (show && typeof localStorage['survey_' + currVersion] == 'undefined') {
-    chrome.tabs.create({'url' : 'http://linkpeelr.appspot.com?v=' + escape(currVersion) + '&new_install=true'}); 
-    localStorage['survey_' + currVersion] = true;
-  }
+  //if (show && typeof localStorage['survey_' + currVersion] == 'undefined') {
+  //  chrome.tabs.create({'url' : 'http://linkpeelr.appspot.com?v=' + escape(currVersion) + '&new_install=true'}); 
+  //  localStorage['survey_' + currVersion] = true;
+  //}
 }
 
 function onUpdate() {
   console.log("Extension Installed");
 
-  if (show && typeof localStorage['survey_' + currVersion] == 'undefined') {
-    chrome.tabs.create({'url' : 'http://linkpeelr.appspot.com?v=' + escape(currVersion)});
-    localStorage['survey_' + currVersion] = true; 
-  }
+  // if (show && typeof localStorage['survey_' + currVersion] == 'undefined') {
+  //   chrome.tabs.create({'url' : 'http://linkpeelr.appspot.com?v=' + escape(currVersion)});
+  //   localStorage['survey_' + currVersion] = true; 
+  // }
 }
 
 var prevVersion = localStorage['version'];

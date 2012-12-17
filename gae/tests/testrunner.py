@@ -10,7 +10,6 @@ Run unit tests for App Engine apps.
 SDK_PATH    Path to the SDK installation
 TEST_PATH   Path to package containing test modules"""
 
-
 def main(sdk_path, test_path):
     sys.path.insert(0, sdk_path)
     import dev_appserver

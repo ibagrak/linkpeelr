@@ -1,5 +1,5 @@
-application: green-algae
-version: 1
+application: linkpeelr-hrd
+version: 2
 runtime: python27
 threadsafe: true
 api_version: 1

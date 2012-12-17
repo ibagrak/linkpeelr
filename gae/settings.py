@@ -22,10 +22,10 @@ app_config = {
 }
 
 # i18n config
-AVAILABLE_LOCALES = ['en_US', 'de_DE']
+AVAILABLE_LOCALES = ['en_US']
 
 # List of valid APIs
-APIS = frozenset({'signup_mailing_list', 'change_email_addr'})
+APIS = frozenset(['peel', 'peel_all', 'last'])
 
 #200 OK - Everything worked as expected.
 #400 Bad Request - Often missing a required parameter.
@@ -35,18 +35,14 @@ APIS = frozenset({'signup_mailing_list', 'change_email_addr'})
 #500, 502, 503, 504 Server errors - something went wrong on Stripe's end.
 
 API_CODES  = { 200 : 'Success', 
-               400 : {'email'       : 'Invalid email address', 
-                      'password'    : 'Invalid password', 
-                      'email_password' : 'Invalid email or password', 
-                      'unsupported' : 'Unsupported API', 
-                      'missing'     : 'Not all parameter present', 
-                      'noemail'     : 'Email not valid'}, 
-               401 : 'Unauthorized', 
-               402 : {'unconfirmed' : 'Email has not been confirmed.', 
-                      'duplicate'   : 'User already exists.'},
-               404 : 'Does not exist', 
-               500 : {'generic'        : 'Server error', 
-                      'admin_required' : 'Please contact application administrator for support'}}
+               301 : 'Moved permanently', 
+               302 : 'Found',
+               400 : {'unsupported'    : 'API not supported'}, 
+               401 : {}, 
+               402 : {'failed'         : 'Download failed'},
+               404 : {'dne'            : 'Does not exist'},
+               405 : {'not_allowed'    : 'Method not allowed'}, 
+               500 : {'generic'        : 'Server error'}}
 
 # URLs
 APP_ID = get_application_id()
