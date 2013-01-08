@@ -44,6 +44,22 @@ API_CODES  = { 200 : 'Success',
                405 : {'not_allowed'    : 'Method not allowed'}, 
                500 : {'generic'        : 'Server error'}}
 
+LEGACY_API_CODES = {
+  'OK' : 0,
+  'INVALID_API_ERROR' : 1,
+  'INVALID_URL_ERROR' : 2,
+  'DOWNLOAD_ERROR' : 3,
+  'GENERAL_ERROR' : 4, 
+  200 : 200,
+  301 : 301, 
+  302 : 302,
+  400 : 1,
+  404 : 2, 
+  402 : 3, 
+  405 : 4, 
+  500 : 4,
+}
+
 # URLs
 APP_ID = get_application_id()
 

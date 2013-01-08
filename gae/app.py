@@ -10,6 +10,7 @@ routes = [webapp2.Route('/',                handler = index.Index),
           
           # RPC API
           webapp2.Route('/rpc/<action>',    handler = api.RPCHandler), 
+          
           webapp2.Route('/api',             handler = api.LegacyRPCHandler),
 
           ]                             

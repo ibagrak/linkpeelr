@@ -1,5 +1,8 @@
 import logging
+import traceback
+import sys
 
+import webapp2
 from webapp2_extras import json
 
 from google.appengine.api import urlfetch
@@ -40,7 +43,7 @@ class RPCHandler(common.BaseAPIHandler):
                         'peeled'   : result['response']['url'], 
                         'where'    : args['where'], 
                         'ip'       : args['ip'] }
-                memcache.set(key = "last", value = last, time = 3600)  
+                memcache.set(key = "last", value = last, time = 3600) 
             else:
                 result = common.get_error(code)
             
@@ -87,6 +90,56 @@ class RPCHandler(common.BaseAPIHandler):
 
 class LegacyRPCHandler(RPCHandler):
     
-    def get(self):
-        pass
+    def handle_exception(self, exception, debug_mode):
+        # Log the error.
+        logging.exception(exception)
 
+        # If the exception is a HTTPException, use its error code.
+        # Otherwise use a generic 500 error code.
+        if isinstance(exception, webapp2.HTTPException):
+            self.response.set_status(exception.code)
+        else:
+            self.response.set_status(500)
+            
+        if debug_mode:
+            lines = ''.join(traceback.format_exception(*sys.exc_info()))
+        else:
+            lines = None
+            
+        self.response.clear()
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.write(json.encode((500, lines)))
+
+    def get(self):
+        logging.debug("legacy get")
+        args = self.request.GET
+        action = None
+        response = None
+
+        for arg in args:
+            args[arg] = self.request.get(arg)
+        
+        if not 'action' in args or not args['action'] in settings.APIS:
+            response = { 'code' : 400 }
+        else:
+            action = args['action']
+            getattr(self, action)(args)
+            # extract response and clear the body
+            response = json.decode(self.response.body)
+        
+        self.response.clear()
+
+        # old API expects 200 response code on all non-exceptional responses
+        self.response.set_status(200)
+        self.response.headers['Content-Type'] = 'application/json'
+
+        if 'response' in response:
+            if action == 'last' and len(response['response']) == 5:
+                last = response['response']
+                self.response.write(json.encode((settings.LEGACY_API_CODES[response['code']], [last['time'], last['unpeeled'], last['peeled'], last['where'], last['ip']])))
+            elif 'url' in response['response']:
+                self.response.write(json.encode((settings.LEGACY_API_CODES[response['code']], response['response']['url'])))
+            else: 
+                self.response.write(json.encode((settings.LEGACY_API_CODES[response['code']], )))
+        else: 
+            self.response.write(json.encode((settings.LEGACY_API_CODES[response['code']], )))
