@@ -2,7 +2,7 @@
 {% import 'forms.html' as forms %}
 
 {% block title %}
-{% trans %}Algae is an application template for Google App Engine{% endtrans %}
+{% trans %}LinkPeelr : Know where link is going before you click {% endtrans %}
 {% endblock %}
 
 {% block scripts %}
@@ -11,399 +11,48 @@
 
 {% block content %}
 
-<!-- tabbed content !-->
-<div class="tabbable"> 
-  <ul id="tabs" class="nav nav-tabs">
-    <li class="active"> <a href="#users"><h4><i class="icon-user"></i> {% trans %}Users{% endtrans %}</h4></a></li>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><h4><i class="icon-cogs"></i> APIs <i class="icon-caret-down"></i></h4></a>
-      <ul class="dropdown-menu">
-        <li><a href="#api" data-toggle="tab"><h5>{% trans %}RESTful{% endtrans %}</h5></a></li>
-        <li><a href="#rpc" data-toggle="tab"><h5>{% trans %}RPC{% endtrans %}</h5></a></li>
-      </ul>
-    </li>
-    <li><a href="#security"><h4><i class="icon-lock"></i> {% trans %}Security{% endtrans %}</h4></a></li>
-    <li><a href="#css"><h4><i class="icon-tint"></i> {% trans %}CSS/LESS{% endtrans %}</h4></a></li>
-    <li><a href="#i18n"><h4><i class="icon-flag"></i> {% trans %}I18N{% endtrans %}</h4></a></li>
-    <li><a href="#test"><h4><i class="icon-fire"></i> {% trans %}Testing{% endtrans %}</h4></a></li>
-    <li class="pull-right"><a href="#about"><h4>{% trans %}About{% endtrans %}</h4></a></li>
-  </ul>
-  <div class="tab-content">
-    <div class="tab-pane active row" id="users">
-      <div class="span12">
-
-        <h4>{%trans %}Profiles{% endtrans %}</h4>
-        <blockquote>
-{% trans %}
-        <code>gae/handlers/oauth.py</code> and <code>gae/handlers/email_auth.py</code> request handlers are responsible for processing OAuth and email user authentication. <br>
-        <code>USER_ATTR</code> dictionary in <code>gae/handlers/oauth.py</code> defines how user fields map between different services (identity providers) and the app's internal user model. The rest is a lot of smart Python code you needn't worry about.
-{% endtrans %}
-        </blockquote>
-        {% if logged_in %}
-          {% trans pic=current_user.pic, profile=current_user.profile, username=current_user.username %}
-          <p>Signed in as <img style="max-width:100px" src = "{{ pic }}"> via <a href="{{ profile }}">{{ username }}</a>. <a href="/logout">Logout</a>
-          {% endtrans %}
-        {% else %}
-          {% trans %}
-          No one is signed in. Sign in with:
-          <ul>
-            <li><a href="/auth/facebook">Facebook</a>
-            <li><a href="/auth/google">Google</a>
-            <li><a href="/auth/twitter">Twitter</a>
-            <li><a data-toggle="modal" href="#signup">Sign up</a> or <a data-toggle="modal" href="#signin">sign in</a> with email
-          </ul>
-          {% endtrans %}
-        {% endif %}
-        <h4>{% trans %}Sessions{% endtrans %}</h4>
-        <blockquote>
-        {% trans %}
-        Sessions are tracked by encrypted, client-side cookies. <code>COOKIE_TEMPLATE</code> variable in <code>gae/settings.py</code> defines the cookie content, and <code>session</code> dictionary can be accessed in every request handler. 
-        </blockquote>
-     
-        <p>Reload this page. The number of pageviews should increase. 
-    
-        <p>Pageviews: {{pageviews}}
-        {% endtrans %}
-      </div>
+  <div class="offset1">
+    <p class="lead">Short links are perfect for tweets and status updates, but they keep the original long link hidden from you. Click a short link, and you could end up virtually anywhere. 
+    <p class="lead"<em>LinkPeelr</em> peels short links so you don't be surprised by where you end up. Wonder if <a href="http://bit.ly/blah">http://bit.ly/blah</a> is safe to follow? <em>LinkPeelr</em> can help.
+    <div class="list-item">
+      <div class="list-bullet">1</div>
+      <h3>Try LinkPeelr now</h3>
     </div>
-
-    <div class="tab-pane row" id="api">
-      <div class="span12" >
-        <blockquote>
-        {% trans %}
-        Full CRUD access to models is supported via POST, PUT, GET, and DELETE AJAX calls. See <code>gae/static/js/script.js</code> for sample code. The calls are routed via <code>BaseRESTHandler</code> in <code>gae/handlers/common.py</code>
-        <br>
-        The forms below are automatically generated from model definitions in <code>gae/code/model.py</code>. 
-        <code>generate_model_form()</code> in <code>gae/core/model.py</code> converts the model to a dictionary of template variables, and <code>gae/static/templates/forms.html</code> macro generates the corresponding HTML.
-        {% endtrans %}
-        </blockquote>
-        <h4>{% trans %}Create Entity{% endtrans %}</h4>
-        <blockquote>
-        
-
-        <div class="well">
-          <span class="label label-info">{% trans %}Heads up!{% endtrans %}</span>
-          {% trans %}
-          Only logged in users are authorized to create new entities. See Security tab for how to modify these rules for your app.
-          {% endtrans %}
-        </div>
-        </blockquote>
-        {{ forms.form('create', 'Create', '', form) }}
-        
-        <h4>{% trans %}Update/Delete Entity{% endtrans %}</h4>
-        <blockquote>
-        <div class="well">
-          <span class="label label-info">{% trans %}Heads up!{% endtrans %}</span>
-          {% trans %}
-          Only logged in users are authorized to delete entities. See Security tab for how to modify these rules for your app.
-          {% endtrans %}
-        </div>
-        </blockquote>
-        
-        <script id="entity-row" type="text/html">
-        <tr>      
-          <td data-id=${id}>${id}</td>
-          <td>${obj}</td>
-          <td>
-            <button type="submit" class="btn update_btn" data-id=${id}><i class="icon-edit"></i> {% trans %}Update{% endtrans %}</button> 
-            <button type="submit" class="btn delete_btn" data-id=${id}><i class="icon-trash"></i> {% trans %}Delete{% endtrans %}</button>
-          </td>
-        </tr>
-        </script>
-      
-        <table id="entities" class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>{% trans %}ID{% endtrans %}</th>
-              <th class="span9">{% trans %}Summary{% endtrans %}</th>
-              <th class="">{% trans %}Action{% endtrans %}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for widget in widgets %}
-            <tr>
-              <td>{{widget.key().id()}}</td>
-              <td>{{widget.str}}</td>
-              <td><button type="submit" class="btn update_btn" data-id="{{widget.key().id()}}"><i class="icon-edit"></i> {% trans %}Update{% endtrans %}</button> 
-              <button type="submit" class="btn delete_btn" data-id="{{widget.key().id()}}"><i class="icon-trash"></i> {% trans %}Delete{% endtrans %}</button></td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        
-        {{ forms.form('update', 'Update', 'disabled', form) }}
-      </div>
-    </div>
-
-    <div class="tab-pane row" id="css">
-      <div class="span12">
-        {% trans %}
-        <p><span class="app-less-verify">If this text appears in blue</span>, then LESS stylesheets are working. 
-        <p><code>gae/static/css/less/app.less</code> contains application-specific styles. You can recompile updated styles by running 
-        <code>npm run-script less</code> from <code>gae/static</code>
-        
-        <p>If <code>npm run-script less</code> command fails:</p>
-        <ul>
-          <li>Install npm.
-          <li>Run <code>npm init</code>
-          <li>Accept all defaults (keep pressing Enter)
-          <li>Run <code>$ npm install less --save</code> to install LESS
-          <li>Run <code>$ npm install uglify-js --save</code> to install Javascript minimizer.
-          <li>Run <code>$ npm run-script less; npm run-script js</code> to generate site CSS and minified Javascript.
-        </ul>
-        {% endtrans %}
-      </div>
-    </div>
-
-    <div class="tab-pane row" id="about">
-      <div class="span12" >
-        <p class="lead">{% trans %}Algae is designed to get you app running on Google App Engine in less than 3 minutes and 42 seconds. Guaranteed, or your money back.{% endtrans %}</p>
-
-        <p>{% trans %}Algae integrates de facto industry standards (like Twitter Bootstrap and HTML5 Boilerplate) with features every web app needs (like user management and third-party authentication). It's flexible, functional, and easy to use.{% endtrans %}</p>
-
-        <p>{% trans %}Here is what you get:{% endtrans %}</p>
-
-        <ul>
-          <li><a href="http://html5boilerplate.com">HTML5 Boilerplate</a></li>
-          <li><a href="http://twitter.github.com/bootstrap/index.html">Twitter Bootstrap</a></li>
-          <li><a href="http://lesscss.org/">LESS Stylesheets</a> + <a href="http://fortawesome.github.com/Font-Awesome/">Font Awesome</a></li>
-          <li>{% trans %}User account framework, including: {% endtrans %}
-            <ul>
-              <li>{% trans %}Twitter authentication{% endtrans %}</li>
-              <li>{% trans %}Google authentication{% endtrans %}</li>
-              <li>{% trans %}Facebook authentication{% endtrans %}</li>
-              <li>{% trans %}Email authentication{% endtrans %}</li>
-              <li>{% trans %}Others (<em>Work in progress</em>){% endtrans %}</li>
-            </ul>
-          </li>
-          <li>{% trans %}Plain and RESTful style API bootstrap code:{% endtrans %}
-            <ul>
-              <li>{% trans %}Auto-generate HTML forms from GAE data model{% endtrans %}</li>
-              <li>{% trans %}Seamless entity CRUD via AJAX{% endtrans %}</li>
-            </ul>
-          </li>
-          <li>{% trans %}jQuery form validation{% endtrans %}</li>
-          <li>{% trans %}Basic testing infrastructure (<em>Work in progress</em>){% endtrans %}</li>
-          <li>{% trans %}and more..{% endtrans %}</li>
-        </ul>
-        
-        <p class="lead">{% trans %}Finally, a GAE template to write home about!{% endtrans %}</p>
-      </div>
-    </div>
-
-    <div class="tab-pane row" id="security">
-      <div class="span12" >
-        <p>{% trans %}A Python decorator -- <code>@with_login</code> -- can be used on any method of <code>BaseHandler</code> or <code>BaseAPIHandler</code> (or their subclasses) to prevent unauthenticated users from viewing certain pages or calling APIs.{% endtrans %} </p>
-
-        {% trans %}For instance, this <a href="/login_only">page</a> can only be viewed after you login.{% endtrans %}
-      </div>
-    </div>
-
-    <div class="tab-pane row" id="test">
-      <div class="span12" >
-        <p>{% trans %}Simply run <code>$ python tests/testrunner.py /usr/local/google_appengine .</code> from command line to execute unit and API tests.{% endtrans %}</p>
-        
-        <p>{% trans %}If the above command fails, make sure that <code>webtest</code> and <code>unittest2</code> Python modules are installed and that <code>APPLICATION_ID</code> and <code>SERVER_SOFTWARE</code> environment variables are set correctly, as they are required by <code>testrunner.py</code> script to run.{% endtrans %}</p>
-
-        <p>{% trans %}Here is how to set environment variables:{% endtrans %}</p>
-        <p>
-        <ul class="unstyled">
-          <li><code>$ export SERVER_SOFTWARE=Dev</code>
-          <li><code>$ export APPLICATION_ID=green-algae</code> 
-        </ul></p>
-      </div>
-    </div>
-    <div class="tab-pane row" id="i18n">
-      <div class="span12" >
-        <p>{% trans %}Algae comes preconfigured for internationalization, so your application can speak multiple languages.{% endtrans %}</p>
-        <p>{% trans %}To use this feature, make sure you have both <code>jinja2</code> and <code>babel</code> installed to compile the translations for Algae.{% endtrans %}</p>
-        <p>{% trans %}These steps are needed for creating a multilanguage application:{% endtrans %}
-        <ul>
-          <li><h5>{% trans %}Configure the locales{% endtrans %}</h5></li>
-          <li><h5>{% trans %}Prepare code &amp; templates for i18n{% endtrans %}</h5></li>
-          <li><h5>{% trans %}Extract strings into separate messages file{% endtrans %}</h5></li>
-          <li><h5>{% trans %}Translate the messages into all needed languages{% endtrans %}</h5></li>
-          <li><h5>{% trans %}Compile message files{% endtrans %}</h5></li>
-        </ul>
-        <h5>{% trans %}Configure the locales{% endtrans %}</h5>
-        <p>{% trans %}In <code>settings.py</code> you find the list of
-           the supported locales. Update this list according to your
-           needs.{% endtrans %}</p>
-        <h5>{% trans %}Prepare code &amp; templates for i18n{% endtrans %}</h5>
-        <p>{% trans transtxt='{% trans %}', endtranstxt='{% endtrans %}' %}
-           In essence this boils down to putting any language-specific text
-           into a sequence of <code>{{ transtxt }}</code> -
-           <code>{{ endtranstxt }}</code> in the jinja2-template
-           files and into a sequence of <code>_('</code> -
-           <code>')</code> in the python files.{% endtrans %}</p>
-        <p>{% trans %}Each python file will need to add an import
-           for this to work:{% endtrans%}
-           <br>
-           <code>from webapp2_extras.i18n import gettext as _</code>
-           </p>
-        <p>{% trans %}Some special handling is possible in the
-           jinja2-templates, see <a
-           href="http://jinja.pocoo.org/docs/templates/#i18n-in-templates"
-           target="_blank">i18n in templates</a> from the jinja2
-           documentation.{% endtrans %}</p>
-        <p>{% trans %}And in case your template contains almost
-           only text which has to be translated, you can create a
-           separate template file per language and reference the template
-           in the python code with <code>_('</code><code>')</code>.<br>
-           You will then treat the name of the template as a
-           language-dependent text, which could be 'template.html' for
-           English and 'template.html.de' for German.{% endtrans %}</p>
-        <h5>{% trans %}Extract strings into separate messages file{% endtrans %}</h5>
-        <p>{% trans %}In this step you extract all the strings in the
-           templates and python files into a translation template.{% endtrans%}</p>
-        <p>{% trans %}Use the following command:{% endtrans %}</p>
-        <p><code>$ pybabel extract -F ./babel.cfg -o ./locale/messages.pot ./</code></p>
-        <h5>{% trans %}Translate the messages into all needed languages{% endtrans %}</h5>
-        <p>{% trans %}The very first time when you start your application
-           or when you add a new language you can enter the command:{% endtrans %}</p>
-        <p><code>$ pybabel init -l en_US -d ./locale -i ./locale/messages.pot</code></p>
-        <p>{% trans %}However, once you have started with translating text
-           into a language you should use the command{% endtrans %}</p>
-        <p><code>$ pybabel update -l en_US -d ./locale -i ./locale/messages.pot</code></p>
-        <p>{% trans %}The 'update' will preserve old translations.{% endtrans %}</p>
-        <p>{% trans %}Now you find in the folder <code>./locale/en_US</code>
-        a file named <code>message.po</code> which you can edit and add
-        valid translations for the locale.{% endtrans %}</p>
-        <h5>{% trans %}Compile message files{% endtrans %}</h5>
-        <p>{% trans %}In this last step you are optimizing the messages
-           files for runtime.{% endtrans %}</p>
-        <p>{% trans %}Use the following command for this purpose:{% endtrans %}</p>
-        <p><code>$ pybabel compile -f -d ./locale</code></p>
-        <br>
-        <p>{% trans %}Additional instructions can be found <a href="http://webapp-improved.appspot.com/tutorials/i18n.html">here</a> and <a href="http://jinja.pocoo.org/docs/templates/#i18n-in-templates">here</a>.{% endtrans %}</p>
-        <p>{% trans %}View this page in <a href="/locale/de_DE">German</a>{% endtrans %}
-      </div>
-    </div>
-    <div class="tab-pane row" id="rpc">
-      <div class="span12" >
-        <h4>{% trans %}Change Email Address{% endtrans %}</h4>
-
-        <blockquote>
-        <div class="well">
-          <span class="label label-info">{% trans %}Heads up!{% endtrans %}</span>
-          {% trans %}
-          Only logged in users can change their email address. You can <a href="/">login here</a>.
-          {% endtrans %}
-        </div>
-        </blockquote>
-
-        <form id="change_email_addr_form" class="form-horizontal" name="change_email_addr">
-          <fieldset>
-            <div class="control-group">
-              <label class="control-label" for="email_change">{% trans %}Email address{% endtrans %}</label>
-              <div class="controls">
-                <input type="text" class="input-xlarge required email" id="email_change" val="None">
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <button id="change_email_btn" type="submit" class="btn btn-primary"><i class="icon-edit"></i> {% trans %}Change{% endtrans %}</button> 
-              <span class="form_result"></span>
-            </div>
-
-          </fieldset>
-        </form>
-
-        <h4>{% trans %}Add To Mailing List{% endtrans %}</h4>
-
-        <form id="signup_mailing_list_form" class="form-horizontal" name="signup_mailing_list">
-          <fieldset>
-            <div class="control-group">
-              <label class="control-label" for="email_mailinglist">{% trans %}Email address{% endtrans %}</label>
-              <div class="controls">
-                <input type="text" class="input-xlarge required email" id="email_mailinglist" val="None">
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <button id="signup_mailing_list_btn" type="submit" class="btn btn-primary"><i class="icon-bolt"></i> {% trans %}Sign Up{% endtrans %}</button> 
-              <span class="form_result"></span>
-            </div>
-
-          </fieldset>
-        </form>
-      </div>
-    </div>
-  </div> <!-- tab-content !-->
-</div> <!-- tabbable !-->
-
-<!-- modal popups for email signin/signup !-->
-<div class="tri-state modal hide" id="signup">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal">×</button>
-    <h4>{% trans %}Sign up with your email address{% endtrans %}</h4>
-
-  </div>
-
-  <div class="modal-body">
-    <form id="signup_form" class="form-horizontal" name="email-signup">
-      <fieldset>
-        <div class="control-group">
-          <label class="control-label" for="username">{% trans %}Name{% endtrans %}</label>
-          <div class="controls">
-            <input type="text" class="input-xlarge required" id="username" val="None">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="email">{% trans %}Email address{% endtrans %}</label>
-          <div class="controls">
-            <input type="text" class="input-xlarge required email" id="email" val="None">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="password_raw">{% trans %}Password{% endtrans %}</label>
-          <div class="controls">
-            <input type="password" class="input-xlarge required" id="password_raw" val="None">
-          </div>
-        </div>
-      </fieldset>
-    </form>
-    <div class="form_result"></div>
-  </div>
   
-  <div class="modal-footer">
-    <div class="btn_container offset2">
-      <button id="signup_btn" type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button> 
-    </div>
-  </div>
-</div>
-
-<div class="tri-state modal hide" id="signin">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal">×</button>
-    <h4>{% trans %}Sign in{% endtrans %}</h4>
-  </div>
-
-  <div class="modal-body">
-     <form class="form-horizontal" name="email-signin">
-      <fieldset>
-        <div class="control-group">
-          <label class="control-label" for="email">{% trans %}Email address{% endtrans %}</label>
-          <div class="controls">
-            <input type="text" class="input-xlarge required email" id="email">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="password">{% trans %}Password{% endtrans %}</label>
-          <div class="controls">
-            <input type="password" class="input-xlarge required" id="password">
-          </div>
-        </div>
-      </fieldset>
+    <p>Enter short link and click on the Peel button to reveal the actual long link behind it. Click Follow when you are ready to follow the link.</p>
+    <form id="main_form" class="offset1 form-search" name="signup_mailing_list">
+      <label>URL:</label>
+      <input type="text" class="span5 search-query">
+      <button type="submit" class="btn">Peel</button>
+      <button type="submit" class="btn">Follow</button>
     </form>
-    <div class="form_result"></div>
-  </div>
+    <div class="list-item">
+      <div class="list-bullet">2</div>
+      <h3>Use LinkPeelr on any website</h3>
+    </div>
+    <p>Simply hover your mouse over <em>any link on any website</em> to see where it actually goes!</p>
 
-  <div class="modal-footer">
-    <div class="btn_container offset2">
-      <button id="signin_btn" type="submit" class="btn btn-primary">{% trans %}Sign In{% endtrans %}</button> 
+    <div class="row offset1">
+      <div class="span8">
+        <div class="row">
+          <div class="span4">
+            <div class="thumbnail">
+              <img style="width: 220px; height: 110px" src="/img/feed.png"/>
+            </div>
+          </div>
+          <div class="span4">
+            <button type="submit" class="btn">Download Chrome Extension</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="list-item">
+      <div class="list-bullet">3</div>
+      <h3>See LinkPeelr working for other users</h3>
+    </div>
+    <p>Check out what 3,000+ LinkPeelr users are peeling right now!</p>
+    <div>
     </div>
   </div>
-</div>
 
 {% endblock %}
