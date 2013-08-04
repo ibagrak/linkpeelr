@@ -28,10 +28,10 @@ class RPCHandler(common.BaseAPIHandler):
             getattr(self, action)(args)
 
     def peel(self, args, orig_url = None):
-        logging.debug("peel req: %s" % str(args))
+        logging.info("peel req: %s" % str(args))
         url = args['url']
         result = None
-            
+        
         try: 
             result = urlfetch.fetch(url, method = urlfetch.HEAD, follow_redirects = False, deadline = 1)
             code = result.status_code
@@ -42,7 +42,7 @@ class RPCHandler(common.BaseAPIHandler):
                         'unpeeled' : orig_url if orig_url else url, 
                         'peeled'   : result['response']['url'], 
                         'where'    : args['where'], 
-                        'ip'       : args['ip'] }
+                        'ip'       : self.request.remote_addr }
                 memcache.set(key = "last", value = last, time = 3600) 
             else:
                 result = common.get_error(code)

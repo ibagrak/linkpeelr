@@ -1,24 +1,122 @@
-@vintage-blue: #26979F;
+@onion-pink: rgb(241, 213, 231);
+@onion-purple: rgb(125, 17, 86);
+@onion-green: rgb(211, 231, 187);
+@white: rgb(255, 255, 255);
 
-// http://www.colourlovers.com/palette/473626/Blue_Green_Algae
-@blue-green-algae: #00A464;
-@algae-bloom: #62C08B;
-@dark-blue-green: #0E886E;
-@light-bg-algae: #A7D6B2;
-@blue-green-algae: #58CF8D;
-
-.app-less-verify {
-    color: @vintage-blue;
+.container {
+	width: 800px;
 }
 
-.tab-content {
-	h3,h4 {
-		margin-bottom: 10px;
+//list bullets
+.list-bullet {
+	font-family: 'Philosopher', sans-serif;
+	background-color: lighten(@onion-purple, 60%);
+	color: @white;
+	font-size: x-large; 
+	
+	position: relative;
+	left: -30px; 
+	top: 5px;
+
+	padding-top: 15px; 
+	padding-left: 15px;
+	max-width: 25px; 
+	min-height: 25px;
+	border-radius: 20px;
+
+	&.list-bullet1 {
+		padding-left: 17px;
 	}
+}
+
+.masthead {
+	p {
+		font-size: 20px !important;
+	}
+	#logo {
+		position: relative;
+		margin-left: 120px;
+	}
+}
+
+#intro {
+	text-align: center;
+	font-size: large;
+	font-weight: 200;
+}
+
+#peel_btn {
+	.buttonBackground(lighten(@onion-pink, 10%), @onion-pink, @grayDark, 0 1px 1px rgba(255,255,255,.75));
+}
+
+#follow_btn {
+	.buttonBackground(lighten(@onion-green, 10%), @onion-green, @grayDark, 0 1px 1px rgba(255,255,255,.75));	
+}
+
+#download_btn {
+	.buttonBackground(@onion-green, darken(@onion-green, 25%), @grayDark, 0 1px 1px rgba(255,255,255,.75));
+	margin-top: 40px;	
+	img {
+		max-width: 50px;
+		padding-top: 3px;
+		display: inline;
+	}
+}
+
+// scroller stuff
+#test_scroller {
+	margin-top: 10px;
+	margin-left: 20px;
+	max-width: 700px;
+	height: 82px;	
+	display: block;
+	position: relative;
+	overflow: hidden;
+	border-top-color: rgb(211, 231, 187);
+	border-top-style: solid;
+  	border-top-width: 1px;
+  	text-align: center;
+}
+
+#peeled_info {
+	width: 700px;
+	position: absolute;
+	display: block;
+	bottom: 0px;
+	font-size: x-small;
+	text-align: center;
+}
+
+#peeled_by {
+	position: absolute;
+	display: block;
+	bottom: 0px;	
+	left: 0px;
+	font-size: x-small;
+	margin: 0px 6px;
+}
+
+#peeled_on {
+	position: absolute;
+	display: block;
+	bottom: 0px;
+	right: 0px;
+	font-size: x-small;
+	margin: 0px 6px;
+}
+
+.headline {
+  padding-top: 5px;
+  position: absolute;
+  top: 80px;
+  height: 75px;
+  width: 700px;
 }
 
 html, body {
 	height: 100%;
+	background-image:url('/img/satinweave.png');
+	background-repeat:repeat;
 }
 
 .wrapper {
@@ -46,9 +144,7 @@ body {
 	border-top: 1px solid #E5E5E5;
 	font-size: small;
 }
-.modal-footer {
-	text-align: left;
-}
+
 
 /* social buttons */ 
 /* Social proof buttons from GitHub & Twitter */
@@ -245,7 +341,7 @@ body {
 /* Masthead (docs home) */
 .masthead {
   padding-top: 36px;
-  margin-bottom: 36px;
+  margin-bottom: 26px;
 }
 .masthead h1,
 .masthead p {

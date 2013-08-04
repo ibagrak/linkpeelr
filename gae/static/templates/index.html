@@ -11,47 +11,66 @@
 
 {% block content %}
 
-  <div class="offset1">
-    <p class="lead">Short links are perfect for tweets and status updates, but they keep the original long link hidden from you. Click a short link, and you could end up virtually anywhere. 
-    <p class="lead"<em>LinkPeelr</em> peels short links so you don't be surprised by where you end up. Wonder if <a href="http://bit.ly/blah">http://bit.ly/blah</a> is safe to follow? <em>LinkPeelr</em> can help.
-    <div class="list-item">
-      <div class="list-bullet">1</div>
+  <div class="row span9">
+    <div id="intro" class="">
+      <p>Short links are perfect for tweets and sharing, but they hide the link's true destination.</p>
+      <p><em>LinkPeelr</em> "peels" short links so you don't get surprised by where you end up.</p>
+      <hr>
+      <p>Wonder if <a href="http://bit.ly/9Uk1wi">http://bit.ly/9uk1wi</a> is safe to follow? <em>LinkPeelr</em> can help you find out.</p>
+    </div>
+
+    <div>
+      <div class="list-bullet list-bullet1">1</div>
       <h3>Try LinkPeelr now</h3>
     </div>
   
-    <p>Enter short link and click on the Peel button to reveal the actual long link behind it. Click Follow when you are ready to follow the link.</p>
+    <p>Enter short link and click on the "Peel" button to see the long link behind it. Click "Follow" to follow the link.</p>
     <form id="main_form" class="offset1 form-search" name="signup_mailing_list">
       <label>URL:</label>
-      <input type="text" class="span5 search-query">
-      <button type="submit" class="btn">Peel</button>
-      <button type="submit" class="btn">Follow</button>
+      <input type="text" class="span4 search-query">
+      <button id="peel_btn" type="submit" class="btn">Peel</button>
+      <button id="follow_btn" type="submit" class="btn">Follow</button>
     </form>
-    <div class="list-item">
+    
+    <div>
       <div class="list-bullet">2</div>
       <h3>Use LinkPeelr on any website</h3>
     </div>
-    <p>Simply hover your mouse over <em>any link on any website</em> to see where it actually goes!</p>
+    
+    <p>Simply hover over <em>any link on any website</em> to see where the link really goes!</p>
 
-    <div class="row offset1">
-      <div class="span8">
+    <div class="row">
+      <div class="offset1 span8">
         <div class="row">
           <div class="span4">
             <div class="thumbnail">
-              <img style="width: 220px; height: 110px" src="/img/feed.png"/>
+              <img style="width: 300px;" src="/img/linkpeelr_hover.gif"/>
             </div>
           </div>
-          <div class="span4">
-            <button type="submit" class="btn">Download Chrome Extension</button>
+          <div class="span3">
+            <button id="download_btn" type="submit" class="btn btn-large"><img align="left" src="/img/chrome_logo_64.png"/>Download <br>LinkPeelr Chrome Extension</button>
           </div>
         </div>
       </div>
     </div>
+    
     <div class="list-item">
       <div class="list-bullet">3</div>
-      <h3>See LinkPeelr working for other users</h3>
+      <h3>See LinkPeelr at work</h3>
     </div>
-    <p>Check out what 3,000+ LinkPeelr users are peeling right now!</p>
-    <div>
+
+    <p>Check out what 4,000+ LinkPeelr users are peeling right now!</p>
+    
+    <div id="test_scroller">
+      <div class="headline">
+        Loading activity stream. Please wait...
+      </div>
+      <div class="headline">
+        Loading activity stream. Please wait...
+      </div>
+      <div class="headline">
+        Loading activity stream. Please wait...
+      </div>
     </div>
   </div>
 

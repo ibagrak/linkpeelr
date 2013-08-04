@@ -25,7 +25,7 @@ class I18NTest(unittest2.TestCase):
 	hdr_german_prefer  = {'Accept-Language': 'de, en'}
 
 	# text to check if english response
-	txt_in_english = r'was created by'
+	txt_in_english = r'Short links are perfect'
 	txt_in_german  = r'ist ein Werk von'
 
 	def setUp(self):

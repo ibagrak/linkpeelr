@@ -18,6 +18,7 @@ class RPCTest(unittest2.TestCase):
 
 	where = 'http://www.facebook.com'
 	ip = '192.168.0.1'
+	version = '2.1.0'
 
 	def setUp(self):
 		# Create a WSGI application.
@@ -41,8 +42,8 @@ class RPCTest(unittest2.TestCase):
 		pass
 
 	def test_peel(self):
-		response = self.testapp.get('/rpc/peel?url=%s&where=%s&ip=%s' % 
-			(urllib.quote(self.url), urllib.quote(self.where), urllib.quote(self.ip)))
+		response = self.testapp.get('/rpc/peel?url=%s&where=%s&version=%s' % 
+			(urllib.quote(self.url), urllib.quote(self.where), urllib.quote(self.version)))
 		
 		self.assertEqual(response.status_int, 301)
 		self.assertEqual(response.content_type, 'application/json')
@@ -50,16 +51,16 @@ class RPCTest(unittest2.TestCase):
 		self.assertEqual(json.decode(response.body)['response']['url'], self.url_peeled)
 
 	def test_peel_bad(self):
-		response = self.testapp.get('/rpc/peel?url=%s&where=%s&ip=%s' % 
-			(urllib.quote(self.bad_url), urllib.quote(self.where), urllib.quote(self.ip)), expect_errors = True)
+		response = self.testapp.get('/rpc/peel?url=%s&where=%s&version=%s' % 
+			(urllib.quote(self.bad_url), urllib.quote(self.where), urllib.quote(self.version)), expect_errors = True)
 		
 		self.assertEqual(response.status_int, 402)
 		self.assertEqual(response.content_type, 'application/json')
 		self.assertEqual(json.decode(response.body)['code'], 402	)
 
 	def test_peel_all(self):
-		response = self.testapp.get('/rpc/peel_all?url=%s&where=%s&ip=%s' % 
-			(urllib.quote(self.url2), urllib.quote(self.where), urllib.quote(self.ip)))
+		response = self.testapp.get('/rpc/peel_all?url=%s&where=%s&version=%s' % 
+			(urllib.quote(self.url2), urllib.quote(self.where), urllib.quote(self.version)))
 		
 		self.assertEqual(response.status_int, 301)
 		self.assertEqual(response.content_type, 'application/json')
@@ -67,8 +68,8 @@ class RPCTest(unittest2.TestCase):
 		self.assertEqual(json.decode(response.body)['response']['url'], self.url_peeled)
 
 	def test_api_bad(self):
-		response = self.testapp.get('/rpc/dne?url=%s&where=%s&ip=%s' % 
-			(urllib.quote(self.url), urllib.quote(self.where), urllib.quote(self.ip)), expect_errors = True)
+		response = self.testapp.get('/rpc/dne?url=%s&where=%s&version=%s' % 
+			(urllib.quote(self.url), urllib.quote(self.where), urllib.quote(self.version)), expect_errors = True)
 		
 		self.assertEqual(response.status_int, 400)
 		self.assertEqual(response.content_type, 'application/json')
@@ -99,6 +100,7 @@ class LegacyRPCTest(unittest2.TestCase):
 
 	where = 'http://www.facebook.com'
 	ip = '192.168.0.1'
+	version = '2.1.0'
 
 	def setUp(self):
 		# Create a WSGI application.
@@ -122,8 +124,8 @@ class LegacyRPCTest(unittest2.TestCase):
 		pass
 
 	def test_peel(self):
-		response = self.testapp.get('/api?action=peel&url=%s&where=%s&ip=%s' % 
-			(urllib.quote(self.url), urllib.quote(self.where), urllib.quote(self.ip)))
+		response = self.testapp.get('/api?action=peel&url=%s&where=%s&version=%s' % 
+			(urllib.quote(self.url), urllib.quote(self.where), urllib.quote(self.version)))
 		
 		self.assertEqual(response.status_int, 200)
 		self.assertEqual(response.content_type, 'application/json')
@@ -131,16 +133,16 @@ class LegacyRPCTest(unittest2.TestCase):
 		self.assertEqual(json.decode(response.body)[1], self.url_peeled)
 
 	def test_peel_bad(self):
-		response = self.testapp.get('/api?action=peel&url=%s&where=%s&ip=%s' % 
-			(urllib.quote(self.bad_url), urllib.quote(self.where), urllib.quote(self.ip)), expect_errors = True)
+		response = self.testapp.get('/api?action=peel&url=%s&where=%s&version=%s' % 
+			(urllib.quote(self.bad_url), urllib.quote(self.where), urllib.quote(self.version)), expect_errors = True)
 		
 		self.assertEqual(response.status_int, 200)
 		self.assertEqual(response.content_type, 'application/json')
 		self.assertEqual(json.decode(response.body)[0], 3)
 
 	def test_peel_all(self):
-		response = self.testapp.get('/api?action=peel_all&url=%s&where=%s&ip=%s' % 
-			(urllib.quote(self.url2), urllib.quote(self.where), urllib.quote(self.ip)))
+		response = self.testapp.get('/api?action=peel_all&url=%s&where=%s&version=%s' % 
+			(urllib.quote(self.url2), urllib.quote(self.where), urllib.quote(self.version)))
 		
 		self.assertEqual(response.status_int, 200)
 		self.assertEqual(response.content_type, 'application/json')
@@ -148,8 +150,8 @@ class LegacyRPCTest(unittest2.TestCase):
 		self.assertEqual(json.decode(response.body)[1], self.url_peeled)
 
 	def test_api_bad(self):
-		response = self.testapp.get('/api?action=dne&url=%s&where=%s&ip=%s' % 
-			(urllib.quote(self.url), urllib.quote(self.where), urllib.quote(self.ip)), expect_errors = True)
+		response = self.testapp.get('/api?action=dne&url=%s&where=%s&version=%s' % 
+			(urllib.quote(self.url), urllib.quote(self.where), urllib.quote(self.version)), expect_errors = True)
 		
 		self.assertEqual(response.status_int, 200)
 		self.assertEqual(response.content_type, 'application/json')

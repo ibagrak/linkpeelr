@@ -84,7 +84,7 @@ function peel_all(request, callback) {
   
    	// Note that any URL fetched here must be matched by a permission in
     // the manifest.json file!
-    var url = 'http://linkpeelr.appspot.com/api?action=' + request.action + '&url=' + request.url + '&where=' + request.where + '&version=' + currVersion;
+    var url = '{{REQUEST_DEST}}' + '/api?action=' + request.action + '&url=' + request.url + '&where=' + request.where + '&version=' + currVersion;
     xhr.open('GET', url, true);
     xhr.send();
   };
