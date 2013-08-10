@@ -102,6 +102,22 @@ class LegacyRPCTest(unittest2.TestCase):
 	ip = '192.168.0.1'
 	version = '2.1.0'
 
+	test_urls = { 	"/api?action=peel_all&url=http://youtu.be/MCshzQECqJI&where=www.youtube.com&version=2.0.2" : 302, 
+					"/api?action=peel_all&url=http://bit.ly/11vNt9b&where=www.appbank.net&version=2.0.2" : 301, 
+					"/api?action=peel_all&url=http://amzn.to/14Wb4Nc&where=twitterfeed.com&version=2.0.2" : 301, 
+					"/api?action=peel_all&url=http://amzn.to/14KXzzW&where=twitterfeed.com&version=2.0.2" : 301, 
+					"/api?action=peel_all&url=http://amzn.to/14KXzzW+&where=twitterfeed.com&version=2.0.2" : 301, 
+					"/api?action=peel_all&url=http://amzn.to/15hqvFX+&where=twitterfeed.com&version=2.0.2" : 301, 
+					"/api?action=peel_all&url=http://t.co/R8J8qbu5Az&where=twitter.com&version=2.0.2" : 301, 
+					"/api?action=peel_all&url=http://cnet.co/16gdj0J&where=www.facebook.com&version=2.0.2" : 301, 
+					"/api?action=peel_all&url=http://youtu.be/wKrhHaq8TFY&where=www.reddit.com&version=2.0.2" : 302, 
+					"/api?action=peel_all&url=http://bit.ly/16lh86O&where=www.facebook.com&version=2.0.2" : 302, # was 301
+					"/api?action=peel_all&url=http://tinyurl.com/mdhx3dc&where=www.facebook.com&version=2.0.2" : 301, 
+					"/api?action=peel_all&url=http://youtu.be/Gu-yH3dmGQI&where=www.reddit.com&version=2.0.2" : 302, 
+					"/api?action=peel_all&url=http://ow.ly/nrgzV&where=www.facebook.com&version=2.0.2" : 301, 
+					"/api?action=peel_all&url=http://csm8.org/?page_id=623&where=evechatter.com&version=2.0.2" : 200, # was 3
+					"/api?action=peel_all&url=http://evewho.com&where=evechatter.com&version=2.0.2" : 200 }
+
 	def setUp(self):
 		# Create a WSGI application.
 		application = webapp2.WSGIApplication(app.routes, debug = True, config = settings.app_config)
@@ -173,6 +189,16 @@ class LegacyRPCTest(unittest2.TestCase):
 		self.assertEqual(response.status_int, 200)
 		self.assertEqual(response.content_type, 'application/json')
 		self.assertEqual(json.decode(response.body)[0], 3)
+
+	def test_test_urls(self): 
+		for url in self.test_urls.iterkeys(): 
+			response = self.testapp.get(url)
+
+			self.assertEqual(response.status_int, 200)
+			self.assertEqual(response.content_type, 'application/json')
+			self.assertEqual(json.decode(response.body)[0], self.test_urls[url], url)
+
+
 
 
 

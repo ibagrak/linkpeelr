@@ -7,18 +7,8 @@ var max_rotations = 500;
 
 $(document).ready( function() {
     
-
     // remove ugly IE shadow around links / tabs
     $("a").focus(function() { $(this).blur(); });
-
-    // attach datepicker fields
-    $('div[id$="datepicker"]').datepicker();
-
-    // enable tabs on the index page
-    $('#tabs a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    });
 
     // setup validation to play well with default Twitter bootstrap classes
     $('form').each(function () {
@@ -43,6 +33,102 @@ $(document).ready( function() {
         });
     });
 
+    /* 
+    REST API CRUD forms
+    */
+
+    // helpers
+    var restore = function(frm, btn) {
+        // Restore
+        // only restore children inputs of controls or checkboxes (doesn't apply to datepicker)
+        frm.find('.controls > :input').removeAttr('disabled');
+        frm.find('.controls > :input').val('');
+        frm.find('.checkbox > :input').removeAttr('disabled');
+        btn.removeAttr('disabled');
+    };
+            
+    var show_result = function(result, msg) {
+        // hide form & show result
+        result.html(msg);
+        result.show();
+        result.fadeOut(3000);
+    };
+
+    // 1. online peeler
+    $('#peel_btn, #follow_btn').click(function () {
+        var btn = $(this);
+        var frm = $(this).parents('form');
+        var result = $(this).siblings('.form_result');
+        var kvs = {}
+        var invalid_fields = false;
+        var action = $(this).attr('name');
+
+        if (action == 'follow') {
+            if ($("#url").val() != '') {
+                window.location = $("#url").val()
+            }
+            return false;
+        }
+
+        frm.find(":input").each(function() {
+            if (!$(this).hasClass('dp') && !$(this).hasClass('checkbox') && !frm.validate().element($(this)))
+                invalid_fields = true;
+
+            if ($(this).attr('type') == 'password') {
+                kvs[$(this).attr('id')] = MD5($(this).val());
+            } else {
+                kvs[$(this).attr('id')] = $(this).val();
+            }
+        });
+
+        if (invalid_fields) 
+            return false;
+
+        // from mustache template
+        kvs['version'] = "{{VERSION}}";
+        kvs['where'] = "{{REQUEST_DEST}}";
+
+        // Disable form
+        frm.find(':input').attr('disabled', '');
+        
+        // Disable button
+        btn.attr('disabled', '');
+        
+        $.ajax({
+            type: 'GET',
+            url: '/rpc/' + action,
+            data: kvs,
+        }).done(function(data, code, jqxhr) {
+            var code = data['code'];
+            var message = data['response'];
+
+            // Restore
+            restore(frm, btn);
+                
+            if (code == 200) {  
+                // hide form & show result
+                if (action == 'change_email_addr') 
+                    show_result(result, 'Email updated!');
+                else
+                    show_result(result, 'Thanks for signing up');
+            } else {
+                // should never happen (HTTP error code always matches JSON 'code')
+                show_result(result, 'So sorry! ' + message);
+            }                  
+        }).fail(function(jqxhr, code, exception) {
+            // TODO: Error handling
+            var data = $.parseJSON(jqxhr.responseText);
+            var code = data['code'];
+            var message = data['response'];
+            
+            // Restore
+            restore(frm, btn);
+            
+            show_result(result, 'So sorry! ' + message);
+        }); 
+    });
+
+    // 3. scroller
     headline_count = $("div.headline").size();
     $("div.headline:eq(" + current_headline + ")").css('top', '0px');
     

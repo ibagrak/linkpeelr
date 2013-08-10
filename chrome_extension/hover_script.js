@@ -221,9 +221,9 @@ $(document).ready(function() {
 				// relative 
 				} else if (href.charAt(0) == '/' || href.charAt(0) == '.') {
 					return;
-				// secure
-				} else if (href.length > 5 && href.substr(0, 5) == 'https') {
-					return;
+				// // secure
+				// } else if (href.length > 5 && href.substr(0, 5) == 'https') {
+				// 	return;
 				// another protocol
 				} else if (href.length > 4 && href.substr(0, 4) != 'http') {
 					return;
@@ -246,8 +246,7 @@ $(document).ready(function() {
 					return;
 				}
 				
-				if (/imgur.com$/.test(url_parts['host']) || 
-					/twitter.com$/.test(url_parts['host'])) {
+				if (/imgur.com$/.test(url_parts['host'])) {
 					return;
 				}
 				

@@ -23,7 +23,7 @@
 
 	"content_scripts": [
     	{
-			"matches": ["http://*/*"],
+			"matches": ["http://*/*", "https://*.twitter.com/*", "https://*.facebook.com/*"],
 			"css": ["tipTip.css"],
 			"js": ["jquery.min.js", "hover_script.js"]
     	}
