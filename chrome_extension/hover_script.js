@@ -222,8 +222,8 @@ $(document).ready(function() {
 				} else if (href.charAt(0) == '/' || href.charAt(0) == '.') {
 					return;
 				// secure
-				} else if (href.length > 5 && href.substr(0, 5) == 'https') {
-					return;
+				//} else if (href.length > 5 && href.substr(0, 5) == 'https') {
+				//	return;
 				// another protocol
 				} else if (href.length > 4 && href.substr(0, 4) != 'http') {
 					return;
