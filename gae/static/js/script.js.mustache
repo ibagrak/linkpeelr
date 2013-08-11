@@ -38,13 +38,15 @@ $(document).ready( function() {
     */
 
     // helpers
-    var restore = function(frm, btn) {
+    var restore = function(frm) {
         // Restore
         // only restore children inputs of controls or checkboxes (doesn't apply to datepicker)
         frm.find('.controls > :input').removeAttr('disabled');
         frm.find('.controls > :input').val('');
         frm.find('.checkbox > :input').removeAttr('disabled');
-        btn.removeAttr('disabled');
+        frm.find(':button').each(function() {
+            $(this).removeAttr('disabled');
+        });
     };
             
     var show_result = function(result, msg) {
@@ -84,6 +86,11 @@ $(document).ready( function() {
         if (invalid_fields) 
             return false;
 
+        if (kvs['url'] == '') {
+            show_result(result, 'Enter a valid URL')
+            return false;
+        }
+
         // from mustache template
         kvs['version'] = "{{VERSION}}";
         kvs['where'] = "{{REQUEST_DEST}}";
@@ -105,16 +112,11 @@ $(document).ready( function() {
             // Restore
             restore(frm, btn);
                 
-            if (code == 200) {  
-                // hide form & show result
-                if (action == 'change_email_addr') 
-                    show_result(result, 'Email updated!');
-                else
-                    show_result(result, 'Thanks for signing up');
+            if (code == 301 || code == 302) {  
+                frm.find("#url").val(message['url'])
             } else {
-                // should never happen (HTTP error code always matches JSON 'code')
-                show_result(result, 'So sorry! ' + message);
-            }                  
+                frm.find("#url").val(kvs['url'])
+            }          
         }).fail(function(jqxhr, code, exception) {
             // TODO: Error handling
             var data = $.parseJSON(jqxhr.responseText);
@@ -124,7 +126,7 @@ $(document).ready( function() {
             // Restore
             restore(frm, btn);
             
-            show_result(result, 'So sorry! ' + message);
+            show_result(result, 'Oops! Something is wrong.');
         }); 
     });
 

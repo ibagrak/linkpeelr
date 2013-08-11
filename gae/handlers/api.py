@@ -47,7 +47,7 @@ class RPCHandler(common.BaseAPIHandler):
             else:
                 result = common.get_error(code)
             
-            self.response.set_status(code)
+            self.response.set_status(200)
             self.response.headers['Content-Type'] = 'application/json'
             self.response.write(json.encode(result))
     

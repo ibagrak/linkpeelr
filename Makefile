@@ -31,21 +31,20 @@ remote_ext:
 	mustache remote.yml chrome_extension/background.js.mustache > chrome_extension/background.js
 	mustache remote.yml chrome_extension/manifest.json.mustache > chrome_extension/manifest.json
 
-clean: clean_ext clean_app
+clean: clean_app clean_ext 
 
 clean_ext: 
-	
-	rm chrome_extension/background.js
-	rm chrome_extension/manifest.json
+	rm -f chrome_extension/background.js
+	rm -f chrome_extension/manifest.json
 	
 clean_app:
-	rm $(PREFIX)/static/js/script.js
-	rm $(PREFIX)/static/js/site.js
-	rm $(PREFIX)/static/js/combined.js
+	rm -f $(PREFIX)/static/js/script.js
+	rm -f $(PREFIX)/static/js/site.js
+	rm -f $(PREFIX)/static/js/combined.js
 
-	rm $(PREFIX)/static/css/bootstrap.css
-	rm $(PREFIX)/static/css/responsive.css
-	rm $(PREFIX)/static/css/site.css
-	rm $(PREFIX)/static/css/font-awesome-ie7.css
+	rm -f $(PREFIX)/static/css/bootstrap.css
+	rm -f $(PREFIX)/static/css/responsive.css
+	rm -f $(PREFIX)/static/css/site.css
+	rm -f $(PREFIX)/static/css/font-awesome-ie7.css
 
 
