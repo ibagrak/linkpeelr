@@ -87,6 +87,9 @@ class RPCHandler(common.BaseAPIHandler):
             self.prep_json_response(200, message = kvs)
         else:
             self.prep_json_response(402, key = 'failed')
+            self.response.set_status(200)
+
+        logging.info(self.response)
 
 class LegacyRPCHandler(RPCHandler):
     

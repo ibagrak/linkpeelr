@@ -92,8 +92,8 @@ $(document).ready( function() {
         }
 
         // from mustache template
-        kvs['version'] = "{{VERSION}}";
-        kvs['where'] = "{{REQUEST_DEST}}";
+        kvs['version'] = "2.1.0";
+        kvs['where'] = "http://localhost:8086";
 
         // Disable form
         frm.find(':input').attr('disabled', '');
