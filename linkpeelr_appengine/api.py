@@ -7,20 +7,19 @@ __author__ = "Ilya Bagrak <ilya.bagrak@gmail.com>"
 
 import logging
 import datetime
+import webapp2
 
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.api import urlfetch
 from google.appengine.api import memcache
 
-from django.utils import simplejson
+import json
 
 import settings
 
 logger = logging.getLogger('api')
 logger.setLevel(logging.DEBUG)
 
-class APIHandler(webapp.RequestHandler):
+class APIHandler(webapp2.RequestHandler):
     """ 
     Will handle JSON requests.
     """
@@ -39,8 +38,8 @@ class APIHandler(webapp.RequestHandler):
         else:    
             result = getattr(self, action)(kvs)
                 
-        logger.debug("JSON result %s" % simplejson.dumps(result))
-        self.response.out.write(simplejson.dumps(result))
+        logger.debug("JSON result %s" % json.dumps(result))
+        self.response.out.write(json.dumps(result))
         
     def peel(self, kvs, orig_url = None):
         logger.debug("peel req: %s" % str(kvs))
@@ -94,7 +93,11 @@ class APIHandler(webapp.RequestHandler):
             return (settings.OK, [kvs['time'], kvs['unpeeled'], kvs['peeled'], kvs['where'], kvs['ip']])
         else:
             return (settings.GENERAL_ERROR)
-        
+
+logger = logging.getLogger('api')
+logger.setLevel(logging.DEBUG)
+
+"""       
 def main():
     logger = logging.getLogger('api')
     logger.setLevel(logging.DEBUG)
@@ -103,3 +106,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+"""
